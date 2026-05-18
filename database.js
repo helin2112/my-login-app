@@ -12,6 +12,8 @@ db.serialize(() => {
       password TEXT
     )
   `);
-});
+}); 
 
-module.exports = db;
+module.exports = db;   
+
+
