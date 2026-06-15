@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkillBridge - Community Guestbook</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #0f0c29 0%, #1a1a2e 50%, #16213e 100%);
+            color: #ffffff;
+            min-height: 100vh;
+        }
+
+        /* ============ NAVBAR ============ */
+        .navbar {
+            background: rgba(15, 12, 41, 0.95);
+            backdrop-filter: blur(12px);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            border-bottom: 1px solid rgba(78, 205, 196, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .logo i {
+            color: #4ecdc4;
+            margin-right: 10px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            color: #e0e0e0;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            background: rgba(78, 205, 196, 0.15);
+            color: #4ecdc4;
+            transform: translateY(-2px);
+        }
+
+        .nav-links a.active {
+            background: rgba(78, 205, 196, 0.2);
+            color: #4ecdc4;
+        }
+
+        .search-box {
+            position: relative;
+        }
+
+        .search-box input {
+            padding: 0.7rem 2.5rem 0.7rem 1.2rem;
+            border-radius: 50px;
+            border: 1px solid rgba(78, 205, 196, 0.3);
+            background: rgba(255, 255, 255, 0.08);
+            color: white;
+            width: 220px;
+            transition: all 0.3s;
+        }
+
+        .search-box input:focus {
+            width: 280px;
+            border-color: #4ecdc4;
+            outline: none;
+        }
+
+        .search-box input::placeholder {
+            color: #888;
+        }
+
+        .search-box i {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #4ecdc4;
+        }
+
+        .auth-btn {
+            background: linear-gradient(135deg, #4ecdc4, #44a08d);
+            padding: 0.5rem 1.2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+            border: none;
+            color: white;
+        }
+
+        .auth-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(78, 205, 196, 0.3);
+        }
+
+        .menu-toggle {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #4ecdc4;
+        }
+
+        /* ============ PAGE HEADER ============ */
+        .page-header {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: radial-gradient(ellipse at 30% 40%, rgba(78, 205, 196, 0.08), transparent 70%);
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .page-header h1 i {
+            color: #4ecdc4;
+            margin-right: 10px;
+        }
+
+        .page-header p {
+            font-size: 1.1rem;
+            color: #ccc;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* ============ GUESTBOOK CONTAINER ============ */
+        .guestbook-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* ============ MESSAGE FORM ============ */
+        .message-form {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(78, 205, 196, 0.2);
+        }
+
+        .message-form h3 {
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+        }
+
+        .message-form h3 i {
+            color: #4ecdc4;
+            margin-right: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(78, 205, 196, 0.3);
+            border-radius: 12px;
+            color: white;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: #4ecdc4;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .form-group input::placeholder, .form-group textarea::placeholder {
+            color: #888;
+        }
+
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+            font-family: inherit;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #4ecdc4, #44a08d);
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            color: white;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(78, 205, 196, 0.3);
+        }
+
+        /* ============ MESSAGES SECTION ============ */
+        .messages-section {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 20px;
+            padding: 1.5rem;
+        }
+
+        .messages-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .messages-header h3 {
+            font-size: 1.3rem;
+        }
+
+        .messages-header h3 i {
+            color: #4ecdc4;
+            margin-right: 10px;
+        }
+
+        .message-count {
+            background: rgba(78, 205, 196, 0.2);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: #4ecdc4;
+        }
+
+        .refresh-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(78, 205, 196, 0.3);
+            padding: 0.5rem 1rem;
+            border-radius: 30px;
+            color: #4ecdc4;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .refresh-btn:hover {
+            background: rgba(78, 205, 196, 0.2);
+            transform: scale(1.05);
+        }
+
+        /* ============ MESSAGE CARDS ============ */
+        .messages-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            max-height: 500px;
+            overflow-y: auto;
+            padding-right: 0.5rem;
+        }
+
+        .messages-grid::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .messages-grid::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+
+        .messages-grid::-webkit-scrollbar-thumb {
+            background: #4ecdc4;
+            border-radius: 10px;
+        }
+
+        .message-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 1.2rem;
+            transition: all 0.3s;
+            border-left: 3px solid #4ecdc4;
+        }
+
+        .message-card:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(5px);
+        }
+
+        .message-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.8rem;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #4ecdc4, #44a08d);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .user-name {
+            font-weight: bold;
+            color: #4ecdc4;
+        }
+
+        .message-date {
+            font-size: 0.75rem;
+            color: #888;
+        }
+
+        .message-content {
+            color: #ddd;
+            line-height: 1.5;
+            margin-left: 50px;
+            word-wrap: break-word;
+        }
+
+        .delete-btn {
+            background: none;
+            border: none;
+            color: #ff6b6b;
+            cursor: pointer;
+            font-size: 1rem;
+            padding: 0.3rem;
+            border-radius: 50%;
+            transition: all 0.2s;
+        }
+
+        .delete-btn:hover {
+            background: rgba(255, 107, 107, 0.2);
+            transform: scale(1.1);
+        }
+
+        /* ============ EMPTY STATE ============ */
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: #888;
+        }
+
+        .empty-state i {
+            font-size: 3rem;
+            color: #4ecdc4;
+            margin-bottom: 1rem;
+        }
+
+        /* ============ MODAL ============ */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: #1a1a2e;
+            padding: 2rem;
+            border-radius: 20px;
+            max-width: 400px;
+            width: 90%;
+            border: 1px solid rgba(78, 205, 196, 0.3);
+        }
+
+        .close {
+            float: right;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #888;
+        }
+
+        .close:hover {
+            color: #ff6b6b;
+        }
+
+        .auth-tabs {
+            display: flex;
+            gap: 1rem;
+            margin: 1rem 0;
+            border-bottom: 1px solid rgba(78, 205, 196, 0.2);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            color: #888;
+            font-size: 1rem;
+        }
+
+        .tab-btn.active {
+            color: #4ecdc4;
+            border-bottom: 2px solid #4ecdc4;
+        }
+
+        input {
+            width: 100%;
+            padding: 0.8rem;
+            margin: 0.5rem 0;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(78, 205, 196, 0.3);
+            border-radius: 10px;
+            color: white;
+        }
+
+        /* ============ RESPONSIVE ============ */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                width: 100%;
+                flex-direction: column;
+                text-align: center;
+                margin-top: 1rem;
+            }
+            
+            .nav-links.show {
+                display: flex;
+            }
+            
+            .menu-toggle {
+                display: block;
+            }
+            
+            .search-box input {
+                width: 180px;
+            }
+            
+            .page-header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .guestbook-container {
+                padding: 1rem;
+            }
+            
+            .message-content {
+                margin-left: 0;
+                margin-top: 0.5rem;
+            }
+            
+            .message-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+
+        /* ============ NOTIFICATION ============ */
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #4ecdc4;
+            color: #1a1a2e;
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            z-index: 10000;
+            animation: slideIn 0.3s ease;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <i class="fas fa-bridge"></i>
+            <span>SkillBridge</span>
+        </div>
+        <div class="nav-links">
+            <a href="index.html">🏠 Home</a>
+            <a href="tutorials.html">📚 Tutorials</a>
+            <a href="playground.html">💻 Playground</a>
+            <a href="community.html" class="active">💬 Community</a>
+          <a href="#" onclick="openFavoritesModal(); return false;">❤️ My Favorites</a>
+            
+        </div>
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Search messages...">
+            <i class="fas fa-search"></i>
+        </div>
+        <div id="authButton" class="auth-btn" onclick="showAuthModal()">
+            <i class="fas fa-sign-in-alt"></i> Login
+        </div>
+        <div class="menu-toggle" onclick="toggleMenu()">
+            <i class="fas fa-bars"></i>
+        </div>
+    </nav>
+
+    <div class="page-header">
+        <h1><i class="fas fa-comments"></i> Community Guestbook</h1>
+        <p>Share ideas, ask questions, and celebrate learning with fellow SkillBridge members.</p>
+    </div>
+
+    <div class="guestbook-container">
+        <!-- Message Form -->
+        <div class="message-form">
+            <h3><i class="fas fa-pen-alt"></i> Leave a Message</h3>
+            <div class="form-group">
+                <input type="text" id="userName" placeholder="Your name">
+            </div>
+            <div class="form-group">
+                <textarea id="userMessage" placeholder="Leave a note for the community..."></textarea>
+            </div>
+            <button class="submit-btn" onclick="postMessage()">
+                <i class="fas fa-paper-plane"></i> Post Message
+            </button>
+        </div>
+
+        <!-- Messages Section -->
+        <div class="messages-section">
+            <div class="messages-header">
+                <h3><i class="fas fa-history"></i> Community Messages</h3>
+                <div style="display: flex; gap: 1rem; align-items: center;">
+                    <span class="message-count" id="messageCount">0 messages</span>
+                    <button class="refresh-btn" onclick="loadMessages()">
+                        <i class="fas fa-sync-alt"></i> Refresh
+                    </button>
+                </div>
+            </div>
+            <div id="messagesGrid" class="messages-grid">
+                <!-- Messages will load here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Auth Modal -->
+    <div id="authModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeAuthModal()">&times;</span>
+            <h2><i class="fas fa-user-circle"></i> SkillBridge Account</h2>
+            <div class="auth-tabs">
+                <button class="tab-btn active" onclick="showLogin()">Login</button>
+                <button class="tab-btn" onclick="showSignup()">Sign Up</button>
+            </div>
+            <div id="loginForm">
+                <input type="text" id="loginUsername" placeholder="Username">
+                <input type="password" id="loginPassword" placeholder="Password">
+                <button onclick="login()" class="submit-btn">Login</button>
+            </div>
+            <div id="signupForm" style="display:none">
+                <input type="text" id="signupUsername" placeholder="Username">
+                <input type="password" id="signupPassword" placeholder="Password">
+                <button onclick="signup()" class="submit-btn">Create Account</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ========== MESSAGES DATA ==========
+        let messages = JSON.parse(localStorage.getItem('skillbridge_messages')) || [
+            {
+                id: 1,
+                name: "Sarah Chen",
+                message: "Just finished the Python course! The exam was challenging but I passed! 🎉",
+                date: new Date().toLocaleString(),
+                userId: null
+            },
+            {
+                id: 2,
+                name: "ተፈሪ አለሙ",
+                message: "በአማርኛ ፕሮግራሚንግ መማር በጣም አስደሳች ነው! እኔ ጃቫስክሪፕት እየተማርኩ ነው። ለሁሉም ምክር እሰጣለሁ!",
+                date: new Date().toLocaleString(),
+                userId: null
+            },
+            {
+                id: 3,
+                name: "Dmitri Volkov",
+                message: "The DSA course is excellent! The binary search explanation really helped me understand algorithms better.",
+                date: new Date().toLocaleString(),
+                userId: null
+            },
+            {
+                id: 4,
+                name: "李华",
+                message: "HTML和CSS课程非常棒！我现在可以创建自己的网页了。谢谢SkillBridge！",
+                date: new Date().toLocaleString(),
+                userId: null
+            },
+            {
+                id: 5,
+                name: "Maria Garcia",
+                message: "Just got my certificate for SQL! The exam was well-designed. Highly recommend this platform! 🌟",
+                date: new Date().toLocaleString(),
+                userId: null
+            }
+        ];
+
+        let nextId = messages.length + 1;
+
+        // ========== SAVE MESSAGES ==========
+        function saveMessages() {
+            localStorage.setItem('skillbridge_messages', JSON.stringify(messages));
+        }
+
+        // ========== LOAD AND RENDER MESSAGES ==========
+        function loadMessages() {
+            const searchTerm = document.getElementById('searchInput')?.value.toLowerCase() || '';
+            
+            let filteredMessages = messages;
+            if (searchTerm) {
+                filteredMessages = messages.filter(msg => 
+                    msg.name.toLowerCase().includes(searchTerm) || 
+                    msg.message.toLowerCase().includes(searchTerm)
+                );
+            }
+            
+            const grid = document.getElementById('messagesGrid');
+            const messageCount = document.getElementById('messageCount');
+            
+            if (messageCount) {
+                messageCount.textContent = `${filteredMessages.length} message${filteredMessages.length !== 1 ? 's' : ''}`;
+            }
+            
+            if (filteredMessages.length === 0) {
+                grid.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-comment-slash"></i>
+                        <h3>No messages found</h3>
+                        <p>Be the first to leave a message!</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            grid.innerHTML = filteredMessages.map(msg => `
+                <div class="message-card" data-id="${msg.id}">
+                    <div class="message-header">
+                        <div class="user-info">
+                            <div class="user-avatar">${getInitial(msg.name)}</div>
+                            <span class="user-name">${escapeHtml(msg.name)}</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <span class="message-date"><i class="far fa-clock"></i> ${msg.date}</span>
+                            <button class="delete-btn" onclick="deleteMessage(${msg.id})" title="Delete message">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="message-content">
+                        ${escapeHtml(msg.message)}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function getInitial(name) {
+            return name.charAt(0).toUpperCase();
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // ========== POST NEW MESSAGE ==========
+        function postMessage() {
+            const nameInput = document.getElementById('userName');
+            const messageInput = document.getElementById('userMessage');
+            
+            const name = nameInput.value.trim();
+            const message = messageInput.value.trim();
+            
+            if (!name || !message) {
+                showNotification('⚠️ Please enter both your name and message!', 'error');
+                return;
+            }
+            
+            if (name.length < 2) {
+                showNotification('⚠️ Name must be at least 2 characters!', 'error');
+                return;
+            }
+            
+            if (message.length < 5) {
+                showNotification('⚠️ Message must be at least 5 characters!', 'error');
+                return;
+            }
+            
+            const newMessage = {
+                id: nextId++,
+                name: name,
+                message: message,
+                date: new Date().toLocaleString(),
+                userId: currentUser
+            };
+            
+            messages.unshift(newMessage);
+            saveMessages();
+            
+            // Clear inputs
+            nameInput.value = '';
+            messageInput.value = '';
+            
+            // Reload messages
+            loadMessages();
+            
+            // Show success notification
+            showNotification('✅ Message posted successfully!', 'success');
+        }
+
+        // ========== DELETE MESSAGE ==========
+        function deleteMessage(id) {
+            if (confirm('Are you sure you want to delete this message?')) {
+                messages = messages.filter(msg => msg.id !== id);
+                saveMessages();
+                loadMessages();
+                showNotification('🗑️ Message deleted', 'info');
+            }
+        }
+
+        // ========== SEARCH FUNCTIONALITY ==========
+        function setupSearch() {
+            const searchInput = document.getElementById('searchInput');
+            if (searchInput) {
+                searchInput.addEventListener('input', () => {
+                    loadMessages();
+                });
+            }
+        }
+
+        // ========== NOTIFICATION ==========
+        function showNotification(message, type = 'success') {
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.innerHTML = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+
+        // ========== MOBILE MENU ==========
+        function toggleMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            navLinks.classList.toggle('show');
+        }
+
+        // ========== AUTH FUNCTIONS ==========
+        let users = JSON.parse(localStorage.getItem('skillbridge_users')) || [];
+        let currentUser = localStorage.getItem('skillbridge_currentUser') || null;
+
+        function updateAuthUI() {
+            const authBtn = document.getElementById('authButton');
+            if (currentUser) {
+                authBtn.innerHTML = `<i class="fas fa-user"></i> ${currentUser}`;
+                authBtn.onclick = logout;
+            } else {
+                authBtn.innerHTML = `<i class="fas fa-sign-in-alt"></i> Login`;
+                authBtn.onclick = showAuthModal;
+            }
+        }
+
+        function showAuthModal() {
+            document.getElementById('authModal').style.display = 'flex';
+        }
+
+        function closeAuthModal() {
+            document.getElementById('authModal').style.display = 'none';
+        }
+
+        function showLogin() {
+            document.getElementById('loginForm').style.display = 'block';
+            document.getElementById('signupForm').style.display = 'none';
+            document.querySelectorAll('.tab-btn')[0].classList.add('active');
+            document.querySelectorAll('.tab-btn')[1].classList.remove('active');
+        }
+
+        function showSignup() {
+            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('signupForm').style.display = 'block';
+            document.querySelectorAll('.tab-btn')[1].classList.add('active');
+            document.querySelectorAll('.tab-btn')[0].classList.remove('active');
+        }
+
+        function login() {
+            const username = document.getElementById('loginUsername').value.trim();
+            const password = document.getElementById('loginPassword').value;
+            const user = users.find(u => u.username === username && u.password === password);
+            
+            if (user) {
+                currentUser = username;
+                localStorage.setItem('skillbridge_currentUser', currentUser);
+                updateAuthUI();
+                closeAuthModal();
+                showNotification(`Welcome back, ${username}! 🎉`, 'success');
+            } else {
+                alert('Invalid username or password!');
+            }
+        }
+
+        function signup() {
+            const username = document.getElementById('signupUsername').value.trim();
+            const password = document.getElementById('signupPassword').value;
+            
+            if (!username || !password) {
+                alert('Please fill in all fields');
+                return;
+            }
+            
+            if (username.length < 3) {
+                alert('Username must be at least 3 characters');
+                return;
+            }
+            
+            if (password.length < 4) {
+                alert('Password must be at least 4 characters');
+                return;
+            }
+            
+            if (users.find(u => u.username === username)) {
+                alert('Username already exists! Try another one.');
+                return;
+            }
+            
+            users.push({ username, password });
+            localStorage.setItem('skillbridge_users', JSON.stringify(users));
+            alert('✅ Account created successfully! Please login.');
+            showLogin();
+            document.getElementById('signupUsername').value = '';
+            document.getElementById('signupPassword').value = '';
+        }
+
+        function logout() {
+            currentUser = null;
+            localStorage.removeItem('skillbridge_currentUser');
+            updateAuthUI();
+            showNotification('Logged out successfully!', 'info');
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const authModal = document.getElementById('authModal');
+            if (event.target === authModal) closeAuthModal();
+        };
+
+        // ========== INITIALIZE ==========
+        document.addEventListener('DOMContentLoaded', () => {
+            loadMessages();
+            setupSearch();
+            updateAuthUI();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,362 @@
+// ========== language.js - Global Language System for All Pages ==========
+
+// Available languages
+const languages = {
+    en: { name: "English", flag: "🇬🇧", native: "English" },
+    am: { name: "Amharic", flag: "🇪🇹", native: "አማርኛ" },
+    zh: { name: "Chinese", flag: "🇨🇳", native: "中文" },
+    fr: { name: "French", flag: "🇫🇷", native: "Français" },
+    ko: { name: "Korean", flag: "🇰🇷", native: "한국어" },
+    ru: { name: "Russian", flag: "🇷🇺", native: "Русский" }
+};
+
+// Current language (load from localStorage or default to English)
+let currentLanguage = localStorage.getItem('skillbridge_language') || 'en';
+
+// ========== TRANSLATIONS FOR ALL PAGES ==========
+const translations = {
+    // Navbar (common for all pages)
+    navHome: { en: "🏠 Home", am: "🏠 መነሻ", zh: "🏠 首页", fr: "🏠 Accueil", ko: "🏠 홈", ru: "🏠 Главная" },
+    navTutorials: { en: "📚 Tutorials", am: "📚 ትምህርቶች", zh: "📚 教程", fr: "📚 Tutoriels", ko: "📚 튜토리얼", ru: "📚 Уроки" },
+    navPlayground: { en: "💻 Playground", am: "💻 መለማመጃ", zh: "💻 练习场", fr: "💻 Terrain de jeu", ko: "💻 플레이그라운드", ru: "💻 Песочница" },
+    navFavorites: { en: "⭐ My Favorites", am: "⭐ ተወዳጆቼ", zh: "⭐ 我的收藏", fr: "⭐ Mes Favoris", ko: "⭐ 즐겨찾기", ru: "⭐ Избранное" },
+    navCommunity: { en: "💬 Community", am: "💬 ማህበረሰብ", zh: "💬 社区", fr: "💬 Communauté", ko: "💬 커뮤니티", ru: "💬 Сообщество" },
+    
+    // Login/Logout
+    login: { en: "Login", am: "ግባ", zh: "登录", fr: "Connexion", ko: "로그인", ru: "Войти" },
+    logout: { en: "Logout", am: "ውጣ", zh: "退出", fr: "Déconnexion", ko: "로그아웃", ru: "Выйти" },
+    
+    // Hero Section
+    heroTitle: { en: "Bridge the Coding Gap", am: "የኮድ ክፍተትን ያገናኙ", zh: "弥合编码差距", fr: "Comblez le fossé du codage", ko: "코딩 격차를 해소하세요", ru: "Преодолейте разрыв в программировании" },
+    heroSubtitle: { en: "Learn Python, HTML, CSS, Java, and Data Structures & Algorithms. Free tutorials with exams and certificates!", am: "ፓይተን፣ ኤችቲኤምኤል፣ ሲኤስኤስ፣ ጃቫ እና የውሂብ አወቃቀሮችን ይማሩ! ከፈተና እና ሰርተፊኬት ጋር ነጻ ትምህርቶች!", zh: "学习Python、HTML、CSS、Java以及数据结构和算法。免费教程，包含考试和证书！", fr: "Apprenez Python, HTML, CSS, Java et les structures de données. Tutoriels gratuits avec examens et certificats!", ko: "Python, HTML, CSS, Java 및 자료구조를 배우세요. 시험과 수료증이 있는 무료 튜토리얼!", ru: "Изучайте Python, HTML, CSS, Java и структуры данных. Бесплатные уроки с экзаменами и сертификатами!" },
+    ctaButton: { en: "Start Learning Free →", am: "በነጻ መማር ጀምር →", zh: "免费开始学习 →", fr: "Commencer Gratuitement →", ko: "무료로 시작하기 →", ru: "Начать обучение бесплатно →" },
+    
+    // Stats
+    statsCourses: { en: "Courses", am: "ኮርሶች", zh: "课程", fr: "Cours", ko: "강좌", ru: "Курсы" },
+    statsLanguages: { en: "Languages", am: "ቋንቋዎች", zh: "语言", fr: "Langues", ko: "언어", ru: "Языки" },
+    statsCertified: { en: "Exams & Certificates", am: "ፈተናዎች እና ሰርተፊኬቶች", zh: "考试和证书", fr: "Examens et Certificats", ko: "시험 및 수료증", ru: "Экзамены и сертификаты" },
+    
+    // Featured Courses
+    featuredTitle: { en: "Featured Courses", am: "የተመረጡ ኮርሶች", zh: "精选课程", fr: "Cours en Vedette", ko: "추천 강좌", ru: "Рекомендуемые курсы" },
+    startBtn: { en: "Start Learning →", am: "መማር ጀምር →", zh: "开始学习 →", fr: "Commencer →", ko: "학습 시작 →", ru: "Начать обучение →" },
+    
+    // Tutorials Page
+    tutorialsTitle: { en: "All Tutorials", am: "ሁሉም ትምህርቶች", zh: "所有教程", fr: "Tous les Tutoriels", ko: "모든 튜토리얼", ru: "Все уроки" },
+    tutorialsSubtitle: { en: "Complete lessons, take exams, and earn certificates!", am: "ትምህርቶችን ይማሩ፣ ፈተናዎችን ይውሰዱ እና ሰርተፊኬት ያግኙ!", zh: "完成课程、参加考试并获得证书！", fr: "Suivez des cours, passez des examens et obtenez des certificats!", ko: "수업을 완료하고, 시험을 치르고, 수료증을 받으세요!", ru: "Проходите уроки, сдавайте экзамены и получайте сертификаты!" },
+    learnBtn: { en: "Learn", am: "ተማር", zh: "学习", fr: "Apprendre", ko: "배우기", ru: "Учить" },
+    examBtn: { en: "Exam", am: "ፈተና", zh: "考试", fr: "Examen", ko: "시험", ru: "Экзамен" },
+    examAvailable: { en: "Exam Available", am: "ፈተና አለ", zh: "有考试", fr: "Examen Disponible", ko: "시험 가능", ru: "Экзамен доступен" },
+    certified: { en: "Certified", am: "ሰርተፊኬት አለው", zh: "已认证", fr: "Certifié", ko: "수료증 있음", ru: "Сертифицирован" },
+    
+    // Filters
+    filterAll: { en: "All", am: "ሁሉም", zh: "全部", fr: "Tout", ko: "전체", ru: "Все" },
+    filterFrontend: { en: "Frontend", am: "ፊት ማያ", zh: "前端", fr: "Frontend", ko: "프론트엔드", ru: "Фронтенд" },
+    filterBackend: { en: "Backend", am: "ጀርባ ማያ", zh: "后端", fr: "Backend", ko: "백엔드", ru: "Бэкенд" },
+    filterDatabase: { en: "Database", am: "የውሂብ ጎታ", zh: "数据库", fr: "Base de données", ko: "데이터베이스", ru: "База данных" },
+    filterDSA: { en: "DSA", am: "ዲኤስኤ", zh: "数据结构", fr: "DSA", ko: "DSA", ru: "DSA" },
+    
+    // Playground Page
+    playgroundTitle: { en: "Code Playground & Games", am: "ኮድ መለማመጃ እና ጨዋታዎች", zh: "代码练习场和游戏", fr: "Terrain de jeu de code et jeux", ko: "코드 플레이그라운드 및 게임", ru: "Песочница кода и игры" },
+    playgroundSubtitle: { en: "Learn JavaScript through interactive games and coding challenges!", am: "ጃቫስክሪፕትን በይነተግባባዊ ጨዋታዎች እና የኮድ ፈተናዎች ይማሩ!", zh: "通过互动游戏和编码挑战学习JavaScript！", fr: "Apprenez JavaScript grâce à des jeux interactifs et des défis de codage!", ko: "인터랙티브 게임과 코딩 챌린지를 통해 JavaScript를 배우세요!", ru: "Изучайте JavaScript с помощью интерактивных игр и задач по программированию!" },
+    runCode: { en: "Run Code", am: "ኮዱን አሂድ", zh: "运行代码", fr: "Exécuter", ko: "코드 실행", ru: "Запустить" },
+    checkSolution: { en: "Check Solution", am: "መልሱን ተመልከት", zh: "检查答案", fr: "Vérifier", ko: "정답 확인", ru: "Проверить" },
+    
+    // Favorites Page
+    favoritesTitle: { en: "My Favorites", am: "ተወዳጆቼ", zh: "我的收藏", fr: "Mes Favoris", ko: "내 즐겨찾기", ru: "Мои избранные" },
+    favoritesSubtitle: { en: "Save your favorite lessons and access them anytime", am: "የሚወዷቸውን ትምህርቶች ያስቀምጡ", zh: "保存您最喜爱的课程并随时访问", fr: "Enregistrez vos leçons préférées", ko: "즐겨찾는 수업을 저장하세요", ru: "Сохраняйте любимые уроки" },
+    myCollection: { en: "My Collection", am: "የኔ ስብስብ", zh: "我的收藏集", fr: "Ma Collection", ko: "내 컬렉션", ru: "Моя коллекция" },
+    selectAll: { en: "Select All", am: "ሁሉንም ምረጥ", zh: "全选", fr: "Tout sélectionner", ko: "전체 선택", ru: "Выбрать все" },
+    deselectAll: { en: "Deselect All", am: "ሁሉንም አቁም", zh: "取消全选", fr: "Tout désélectionner", ko: "전체 선택 해제", ru: "Отменить все" },
+    removeSelected: { en: "Remove Selected", am: "የተመረጡትን አስወግድ", zh: "删除选中", fr: "Supprimer", ko: "선택 삭제", ru: "Удалить" },
+    noFavorites: { en: "No favorites yet", am: "እስካሁን ምንም ተወዳጆች የሉም", zh: "暂无收藏", fr: "Aucun favori", ko: "즐겨찾기 없음", ru: "Нет избранного" },
+    browseTutorials: { en: "Browse Tutorials", am: "ትምህርቶችን ያስሱ", zh: "浏览教程", fr: "Parcourir", ko: "튜토리얼 둘러보기", ru: "Просмотреть уроки" },
+    viewLesson: { en: "View Lesson", am: "ትምህርቱን ተመልከት", zh: "查看课程", fr: "Voir le cours", ko: "수업 보기", ru: "Посмотреть урок" },
+    remove: { en: "Remove", am: "አስወግድ", zh: "删除", fr: "Supprimer", ko: "제거", ru: "Удалить" },
+    saved: { en: "Saved", am: "ተቀምጧል", zh: "已保存", fr: "Enregistré", ko: "저장됨", ru: "Сохранено" },
+    
+    // Community Page
+    communityTitle: { en: "Community Guestbook", am: "የማህበረሰብ እንግዳ መጽሐፍ", zh: "社区留言板", fr: "Livre d'or communautaire", ko: "커뮤니티 방명록", ru: "Гостевая книга сообщества" },
+    communitySubtitle: { en: "Share ideas, ask questions, and celebrate learning with fellow SkillBridge members.", am: "ሀሳቦችን ያጋሩ፣ ጥያቄዎችን ይጠይቁ እና ከሌሎች SkillBridge አባላት ጋር መማርን ያከብሩ።", zh: "分享想法，提出问题，与SkillBridge成员一起庆祝学习。", fr: "Partagez des idées, posez des questions et célébrez l'apprentissage avec les membres de SkillBridge.", ko: "아이디어를 공유하고, 질문하고, SkillBridge 회원들과 함께 학습을 축하하세요.", ru: "Делитесь идеями, задавайте вопросы и отмечайте обучение с участниками SkillBridge." },
+    leaveMessage: { en: "Leave a Message", am: "መልዕክት ይተው", zh: "留言", fr: "Laisser un message", ko: "메시지 남기기", ru: "Оставить сообщение" },
+    yourName: { en: "Your name", am: "ስምዎ", zh: "您的姓名", fr: "Votre nom", ko: "이름", ru: "Ваше имя" },
+    yourMessage: { en: "Leave a note for the community...", am: "ለማህበረሰቡ መልዕክት ይተው...", zh: "给社区留言...", fr: "Laissez un message pour la communauté...", ko: "커뮤니티에 메시지 남기기...", ru: "Оставьте сообщение для сообщества..." },
+    postMessage: { en: "Post Message", am: "ልጥፍ", zh: "发布", fr: "Publier", ko: "게시", ru: "Опубликовать" },
+    communityMessages: { en: "Community Messages", am: "የማህበረሰብ መልዕክቶች", zh: "社区留言", fr: "Messages de la communauté", ko: "커뮤니티 메시지", ru: "Сообщения сообщества" },
+    messages: { en: "messages", am: "መልዕክቶች", zh: "条留言", fr: "messages", ko: "개 메시지", ru: "сообщений" },
+    refresh: { en: "Refresh", am: "አድስ", zh: "刷新", fr: "Rafraîchir", ko: "새로고침", ru: "Обновить" },
+    noMessages: { en: "No messages found", am: "ምንም መልዕክት አልተገኘም", zh: "暂无留言", fr: "Aucun message trouvé", ko: "메시지 없음", ru: "Сообщения не найдены" },
+    
+    // Auth Modal
+    accountTitle: { en: "SkillBridge Account", am: "SkillBridge መለያ", zh: "SkillBridge账户", fr: "Compte SkillBridge", ko: "SkillBridge 계정", ru: "Аккаунт SkillBridge" },
+    username: { en: "Username", am: "የተጠቃሚ ስም", zh: "用户名", fr: "Nom d'utilisateur", ko: "사용자명", ru: "Имя пользователя" },
+    password: { en: "Password", am: "የይለፍ ቃል", zh: "密码", fr: "Mot de passe", ko: "비밀번호", ru: "Пароль" },
+    createAccount: { en: "Create Account", am: "መለያ ፍጠር", zh: "创建账户", fr: "Créer un compte", ko: "계정 만들기", ru: "Создать аккаунт" }
+};
+
+// Course descriptions in different languages
+const courseDescriptions = {
+    1: { // DSA
+        en: "Master arrays, linked lists, trees, sorting, and searching. Essential for coding interviews!",
+        am: "የውሂብ አወቃቀሮችን እና ስልተ ቀመሮችን ይማሩ - ለኮዲንግ ቃለመጠይቆች አስፈላጊ!",
+        zh: "掌握数组、链表、树、排序和搜索算法 - 面试必备！",
+        fr: "Maîtrisez les tableaux, listes chaînées, arbres, tris et recherches - Essentiel pour les entretiens!",
+        ko: "배열, 연결 리스트, 트리, 정렬 및 검색 마스터하기 - 코딩 면접에 필수!",
+        ru: "Освойте массивы, связные списки, деревья, сортировку и поиск - необходимо для собеседований!"
+    },
+    2: { // Python
+        en: "Learn variables, loops, functions, and data structures. Perfect for beginners!",
+        am: "ተለዋዋጮችን፣ loops፣ ተግባራትን እና የውሂብ አወቃቀሮችን ይማሩ - ለጀማሪዎች በጣም ጥሩ!",
+        zh: "学习变量、循环、函数和数据结构 - 初学者完美选择！",
+        fr: "Apprenez les variables, boucles, fonctions et structures de données - Parfait pour les débutants!",
+        ko: "변수, 반복문, 함수 및 데이터 구조 학습 - 초보자 완벽 선택!",
+        ru: "Изучите переменные, циклы, функции и структуры данных - Идеально для начинающих!"
+    },
+    3: { // HTML
+        en: "Build web pages with semantic HTML, forms, and modern layout techniques.",
+        am: "ድረ-ገጾችን በ HTML ይገንቡ",
+        zh: "使用语义化HTML和现代布局技术构建网页",
+        fr: "Créez des pages web avec HTML sémantique",
+        ko: "시맨틱 HTML로 웹페이지 구축하기",
+        ru: "Создавайте веб-страницы с помощью HTML"
+    },
+    4: { // CSS
+        en: "Style beautiful websites with colors, layouts, animations, and responsive design.",
+        am: "ድረ-ገጾችን በCSS ያጌጡ",
+        zh: "使用CSS设计漂亮的网站，包括颜色、布局和动画",
+        fr: "Stylisez des sites web avec CSS",
+        ko: "CSS로 아름다운 웹사이트 디자인하기",
+        ru: "Стилизуйте веб-сайты с помощью CSS"
+    },
+    5: { // JavaScript
+        en: "Make websites interactive with variables, functions, and DOM manipulation.",
+        am: "JavaScript በመጠቀም ድረ-ገጾችን በይነተግባራዊ ያድርጉ",
+        zh: "使用变量、函数和DOM操作使网站具有交互性",
+        fr: "Rendez les sites web interactifs avec JavaScript",
+        ko: "JavaScript로 인터랙티브 웹사이트 만들기",
+        ru: "Сделайте веб-сайты интерактивными с JavaScript"
+    },
+    6: { // Java
+        en: "Learn object-oriented programming, classes, and methods in Java.",
+        am: "በጃቫ ውስጥ ክፍሎችን እና ዘዴዎችን ይማሩ",
+        zh: "学习Java中的面向对象编程、类和方法",
+        fr: "Apprenez la programmation orientée objet en Java",
+        ko: "Java에서 객체지향 프로그래밍 배우기",
+        ru: "Изучите объектно-ориентированное программирование на Java"
+    },
+    7: { // SQL
+        en: "Query and manage databases with SQL. Learn SELECT, INSERT, UPDATE, and JOIN.",
+        am: "SQL በመጠቀም የውሂብ ጎታዎችን ያስተዳድሩ",
+        zh: "使用SQL查询和管理数据库",
+        fr: "Gérez des bases de données avec SQL",
+        ko: "SQL로 데이터베이스 관리하기",
+        ru: "Управляйте базами данных с помощью SQL"
+    }
+};
+
+// ========== HELPER FUNCTIONS ==========
+function t(key) {
+    return translations[key] ? (translations[key][currentLanguage] || translations[key]['en']) : key;
+}
+
+function getCourseDescription(courseId) {
+    return courseDescriptions[courseId] ? (courseDescriptions[courseId][currentLanguage] || courseDescriptions[courseId]['en']) : "";
+}
+
+function getCurrentLanguage() {
+    return currentLanguage;
+}
+
+function getCurrentFlag() {
+    const flags = { en: '🇬🇧', am: '🇪🇹', zh: '🇨🇳', fr: '🇫🇷', ko: '🇰🇷', ru: '🇷🇺' };
+    return flags[currentLanguage] || '🌐';
+}
+
+function getCurrentLanguageName() {
+    return languages[currentLanguage]?.name || 'English';
+}
+
+// ========== LANGUAGE CHANGE FUNCTION ==========
+function setLanguage(langCode) {
+    if (!languages[langCode]) return;
+    
+    currentLanguage = langCode;
+    localStorage.setItem('skillbridge_language', currentLanguage);
+    
+    // Update floating button display
+    const currentLangDisplay = document.getElementById('currentLangDisplay');
+    if (currentLangDisplay) {
+        currentLangDisplay.innerHTML = getCurrentFlag() + ' ' + getCurrentLanguageName();
+    }
+    
+    // Update active state in language modal
+    document.querySelectorAll('.lang-option-card').forEach(opt => {
+        if (opt.getAttribute('data-lang') === langCode) {
+            opt.classList.add('active');
+        } else {
+            opt.classList.remove('active');
+        }
+    });
+    
+    // Update all translatable elements on the page
+    updatePageTranslations();
+    
+    // Dispatch custom event for other components to listen
+    window.dispatchEvent(new CustomEvent('languageChanged', { detail: { language: currentLanguage } }));
+    
+    // Show notification
+    showLanguageNotification(`Language changed to ${languages[langCode].name} ${getCurrentFlag()}`);
+}
+
+// ========== UPDATE PAGE TRANSLATIONS ==========
+function updatePageTranslations() {
+    // Update elements with data-translate attribute
+    document.querySelectorAll('[data-translate]').forEach(el => {
+        const key = el.getAttribute('data-translate');
+        const translatedText = t(key);
+        if (translatedText !== key) {
+            if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+                el.placeholder = translatedText;
+            } else {
+                el.innerHTML = translatedText;
+            }
+        }
+    });
+    
+    // Update course descriptions
+    document.querySelectorAll('[data-course-desc]').forEach(el => {
+        const courseId = parseInt(el.getAttribute('data-course-desc'));
+        const description = getCourseDescription(courseId);
+        if (description) {
+            el.textContent = description;
+        }
+    });
+    
+    // Update navbar active state text if needed
+    updateNavbarTexts();
+}
+
+function updateNavbarTexts() {
+    const navLinks = document.querySelectorAll('.nav-links a');
+    const navKeys = ['navHome', 'navTutorials', 'navPlayground', 'navFavorites', 'navCommunity'];
+    navLinks.forEach((link, index) => {
+        if (index < navKeys.length) {
+            const translated = t(navKeys[index]);
+            if (translated !== navKeys[index]) {
+                // Preserve the emoji by checking if translation already has it
+                if (!translated.includes('🏠') && !translated.includes('📚') && !translated.includes('💻') && !translated.includes('⭐') && !translated.includes('💬')) {
+                    const originalText = link.innerHTML;
+                    const emoji = originalText.match(/[🏠📚💻⭐💬]/g)?.[0] || '';
+                    link.innerHTML = emoji ? emoji + ' ' + translated : translated;
+                } else {
+                    link.innerHTML = translated;
+                }
+            }
+        }
+    });
+}
+
+// ========== NOTIFICATION ==========
+function showLanguageNotification(message) {
+    const notif = document.createElement('div');
+    notif.className = 'lang-notification';
+    notif.innerHTML = `<i class="fas fa-language"></i> ${message}`;
+    notif.style.cssText = `
+        position: fixed;
+        bottom: 80px;
+        right: 20px;
+        background: #4ecdc4;
+        color: #1a1a2e;
+        padding: 8px 16px;
+        border-radius: 50px;
+        font-size: 0.8rem;
+        z-index: 9999;
+        animation: fadeOutLang 2s ease forwards;
+        font-weight: bold;
+    `;
+    document.body.appendChild(notif);
+    setTimeout(() => notif.remove(), 2000);
+}
+
+// Add animation style
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes fadeOutLang {
+        0% { opacity: 1; transform: translateY(0); }
+        70% { opacity: 1; }
+        100% { opacity: 0; transform: translateY(-20px); visibility: hidden; }
+    }
+    .lang-option-card.active {
+        background: rgba(78, 205, 196, 0.3) !important;
+        border: 1px solid #4ecdc4 !important;
+    }
+`;
+document.head.appendChild(style);
+
+// ========== FLOATING LANGUAGE SWITCHER ==========
+function addFloatingLanguageSwitcher() {
+    if (document.getElementById('floatingLanguageSwitcher')) return;
+    
+    const switcherHTML = `
+        <div class="floating-lang" id="floatingLanguageSwitcher">
+            <button class="floating-lang-btn" onclick="openLanguageModal()">
+                <i class="fas fa-language"></i> <span id="currentLangDisplay">${getCurrentFlag()} ${getCurrentLanguageName()}</span>
+            </button>
+        </div>
+    `;
+    document.body.insertAdjacentHTML('beforeend', switcherHTML);
+}
+
+// ========== LANGUAGE MODAL ==========
+function openLanguageModal() {
+    let modal = document.getElementById('languageModal');
+    if (!modal) {
+        const modalHTML = `
+            <div id="languageModal" class="modal">
+                <div class="modal-content" style="max-width:400px">
+                    <span class="close" onclick="closeLanguageModal()">&times;</span>
+                    <h2><i class="fas fa-globe"></i> <span data-translate="accountTitle">Choose Your Language</span></h2>
+                    <div style="display: grid; grid-template-columns: repeat(2,1fr); gap: 0.8rem; margin-top: 1.5rem;">
+                        <div class="lang-option-card" data-lang="en" onclick="setLanguage('en'); closeLanguageModal();" style="background:rgba(255,255,255,0.06); border-radius:60px; padding:0.7rem 1rem; text-align:center; cursor:pointer;">🇬🇧 English</div>
+                        <div class="lang-option-card" data-lang="am" onclick="setLanguage('am'); closeLanguageModal();" style="background:rgba(255,255,255,0.06); border-radius:60px; padding:0.7rem 1rem; text-align:center; cursor:pointer;">🇪🇹 አማርኛ</div>
+                        <div class="lang-option-card" data-lang="zh" onclick="setLanguage('zh'); closeLanguageModal();" style="background:rgba(255,255,255,0.06); border-radius:60px; padding:0.7rem 1rem; text-align:center; cursor:pointer;">🇨🇳 中文</div>
+                        <div class="lang-option-card" data-lang="fr" onclick="setLanguage('fr'); closeLanguageModal();" style="background:rgba(255,255,255,0.06); border-radius:60px; padding:0.7rem 1rem; text-align:center; cursor:pointer;">🇫🇷 Français</div>
+                        <div class="lang-option-card" data-lang="ko" onclick="setLanguage('ko'); closeLanguageModal();" style="background:rgba(255,255,255,0.06); border-radius:60px; padding:0.7rem 1rem; text-align:center; cursor:pointer;">🇰🇷 한국어</div>
+                        <div class="lang-option-card" data-lang="ru" onclick="setLanguage('ru'); closeLanguageModal();" style="background:rgba(255,255,255,0.06); border-radius:60px; padding:0.7rem 1rem; text-align:center; cursor:pointer;">🇷🇺 Русский</div>
+                    </div>
+                </div>
+            </div>
+        `;
+        document.body.insertAdjacentHTML('beforeend', modalHTML);
+        
+        // Add close button functionality
+        const closeBtn = document.querySelector('#languageModal .close');
+        if (closeBtn) closeBtn.onclick = closeLanguageModal;
+    }
+    
+    modal = document.getElementById('languageModal');
+    if (modal) modal.style.display = 'flex';
+    
+    // Highlight current language
+    document.querySelectorAll('.lang-option-card').forEach(opt => {
+        if (opt.getAttribute('data-lang') === currentLanguage) {
+            opt.classList.add('active');
+        }
+    });
+}
+
+function closeLanguageModal() {
+    const modal = document.getElementById('languageModal');
+    if (modal) modal.style.display = 'none';
+}
+
+// ========== INITIALIZE ==========
+document.addEventListener('DOMContentLoaded', function() {
+    addFloatingLanguageSwitcher();
+    updatePageTranslations();
+    
+    // Close modal when clicking outside
+    window.onclick = function(event) {
+        const modal = document.getElementById('languageModal');
+        if (event.target === modal) closeLanguageModal();
+    };
+});

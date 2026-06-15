@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkillBridge - My Favorites</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #0f0c29 0%, #1a1a2e 50%, #16213e 100%);
+            color: #ffffff;
+            min-height: 100vh;
+        }
+
+        /* ============ NAVBAR ============ */
+        .navbar {
+            background: rgba(15, 12, 41, 0.95);
+            backdrop-filter: blur(12px);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            border-bottom: 1px solid rgba(78, 205, 196, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .logo i {
+            color: #4ecdc4;
+            margin-right: 10px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            color: #e0e0e0;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            background: rgba(78, 205, 196, 0.2);
+            color: #4ecdc4;
+        }
+
+        .auth-btn {
+            background: linear-gradient(135deg, #4ecdc4, #44a08d);
+            padding: 0.5rem 1.2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            border: none;
+            color: white;
+            transition: all 0.3s;
+        }
+
+        .auth-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(78, 205, 196, 0.3);
+        }
+
+        .menu-toggle {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #4ecdc4;
+        }
+
+        /* Page Content (Simple message since favorites are in floating icon) */
+        .page-content {
+            text-align: center;
+            padding: 4rem 2rem;
+            min-height: calc(100vh - 200px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .page-content h1 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #4ecdc4, #ff6b6b);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .page-content p {
+            color: #aaa;
+            margin-bottom: 1.5rem;
+        }
+
+        .browse-link {
+            background: linear-gradient(135deg, #4ecdc4, #44a08d);
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            transition: all 0.3s;
+            display: inline-block;
+        }
+
+        .browse-link:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(78, 205, 196, 0.4);
+        }
+
+        /* ============ FLOATING FAVORITES ICON ============ */
+        .floating-fav {
+            position: fixed;
+            bottom: 100px;
+            right: 25px;
+            z-index: 99;
+        }
+
+        .floating-fav-btn {
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid #ff6b6b;
+            border-radius: 50px;
+            padding: 0.7rem 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: white;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            position: relative;
+        }
+
+        .floating-fav-btn:hover {
+            background: #ff6b6b;
+            color: #1a1a2e;
+            transform: scale(1.05);
+        }
+
+        .fav-count-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #ff6b6b;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            font-size: 0.7rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        /* ============ FAVORITES MODAL ============ */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: #1a1a2e;
+            padding: 1.5rem;
+            border-radius: 24px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            border: 1px solid rgba(78, 205, 196, 0.3);
+            animation: modalFadeIn 0.3s ease;
+        }
+
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(78, 205, 196, 0.2);
+        }
+
+        .modal-header h2 {
+            font-size: 1.3rem;
+        }
+
+        .modal-header h2 i {
+            color: #ff6b6b;
+            margin-right: 8px;
+        }
+
+        .close {
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #888;
+            transition: all 0.2s;
+        }
+
+        .close:hover {
+            color: #ff6b6b;
+        }
+
+        /* Favorites List in Modal */
+        .favorites-list {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .fav-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.8rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.2s;
+        }
+
+        .fav-item:hover {
+            background: rgba(255,255,255,0.05);
+        }
+
+        .fav-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex: 1;
+        }
+
+        .fav-info i {
+            font-size: 1.5rem;
+            color: #4ecdc4;
+        }
+
+        .fav-details h4 {
+            font-size: 0.9rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .fav-details p {
+            font-size: 0.7rem;
+            color: #888;
+        }
+
+        .fav-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .fav-view-btn, .fav-remove-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 8px;
+            transition: all 0.2s;
+        }
+
+        .fav-view-btn {
+            color: #4ecdc4;
+        }
+
+        .fav-view-btn:hover {
+            background: rgba(78, 205, 196, 0.2);
+            transform: scale(1.1);
+        }
+
+        .fav-remove-btn {
+            color: #ff6b6b;
+        }
+
+        .fav-remove-btn:hover {
+            background: rgba(255, 107, 107, 0.2);
+            transform: scale(1.1);
+        }
+
+        .empty-fav {
+            text-align: center;
+            padding: 2rem;
+            color: #888;
+        }
+
+        .empty-fav i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #ff6b6b;
+        }
+
+        .batch-remove-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            border: none;
+            padding: 0.6rem;
+            border-radius: 50px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 1rem;
+            transition: all 0.3s;
+        }
+
+        .batch-remove-btn:hover {
+            transform: scale(1.02);
+        }
+
+        /* Code block for lesson */
+        .code-block {
+            background: #0a0a1a;
+            padding: 1rem;
+            border-radius: 12px;
+            margin: 1rem 0;
+            overflow-x: auto;
+        }
+
+        .code-block pre {
+            color: #4ecdc4;
+            margin: 0;
+            font-family: monospace;
+        }
+
+        /* Auth Modal */
+        .auth-tabs {
+            display: flex;
+            gap: 1rem;
+            margin: 1rem 0;
+            border-bottom: 1px solid rgba(78, 205, 196, 0.2);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            color: #888;
+            font-size: 1rem;
+        }
+
+        .tab-btn.active {
+            color: #4ecdc4;
+            border-bottom: 2px solid #4ecdc4;
+        }
+
+        input {
+            width: 100%;
+            padding: 0.8rem;
+            margin: 0.5rem 0;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(78, 205, 196, 0.3);
+            border-radius: 12px;
+            color: white;
+            font-size: 1rem;
+        }
+
+        .submit-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #4ecdc4, #44a08d);
+            border: none;
+            padding: 0.8rem;
+            border-radius: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 1rem;
+            color: white;
+        }
+
+        /* Notification */
+        .notification {
+            position: fixed;
+            bottom: 180px;
+            right: 25px;
+            background: #4ecdc4;
+            color: #1a1a2e;
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            z-index: 10000;
+            animation: slideIn 0.3s ease;
+            font-weight: bold;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                width: 100%;
+                flex-direction: column;
+                text-align: center;
+                margin-top: 1rem;
+            }
+            .nav-links.show {
+                display: flex;
+            }
+            .menu-toggle {
+                display: block;
+            }
+            .floating-fav {
+                bottom: 80px;
+                right: 15px;
+            }
+            .notification {
+                bottom: 150px;
+                right: 15px;
+                left: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <i class="fas fa-bridge"></i>
+            <span>SkillBridge</span>
+        </div>
+        <div class="nav-links">
+            <a href="index.html">🏠 Home</a>
+            <a href="tutorials.html">📚 Tutorials</a>
+            <a href="playground.html">💻 Playground</a>
+            <a href="community.html">💬 Community</a>
+           <a href="#" onclick="openFavoritesModal(); return false;">❤️ My Favorites</a>
+            
+        </div>
+        <div id="authButton" class="auth-btn" onclick="showAuthModal()">
+            <i class="fas fa-sign-in-alt"></i> Login
+        </div>
+        <div class="menu-toggle" onclick="toggleMenu()">
+            <i class="fas fa-bars"></i>
+        </div>
+    </nav>
+
+    <!-- Simple Page Content -->
+    <div class="page-content">
+        <h1><i class="fas fa-heart"></i> My Favorites</h1>
+        <p>Click the ❤️ button at the bottom-right to view your saved favorites!</p>
+        <a href="tutorials.html" class="browse-link"><i class="fas fa-book-open"></i> Browse Tutorials</a>
+    </div>
+
+    <!-- Floating Favorites Icon -->
+    <div class="floating-fav" style="position: fixed; bottom: 100px; right: 25px; z-index: 99;">
+        <button class="floating-fav-btn" onclick="openFavoritesModal()" style="background: rgba(0,0,0,0.7); backdrop-filter: blur(10px); border: 1px solid #ff6b6b; border-radius: 50px; padding: 0.7rem 1.2rem; cursor: pointer; color: white; display: flex; align-items: center; gap: 8px; position: relative;">
+            <i class="fas fa-heart"></i> Favorites
+            <span id="favCountBadge" style="position: absolute; top: -8px; right: -8px; background: #ff6b6b; border-radius: 50%; width: 20px; height: 20px; font-size: 0.7rem; display: flex; align-items: center; justify-content: center;">0</span>
+        </button>
+    </div>
+
+    <!-- Favorites Modal -->
+    <div id="favoritesModal" class="modal">
+        <div class="modal-content" style="max-width: 500px;">
+            <span class="close" onclick="closeFavoritesModal()">&times;</span>
+            <h2><i class="fas fa-heart"></i> My Favorites</h2>
+            <div id="favoritesList" style="max-height: 400px; overflow-y: auto;"></div>
+        </div>
+    </div>
+
+    <!-- Lesson Modal (for viewing lesson) -->
+    <div id="lessonModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeLessonModal()">&times;</span>
+            <h2 id="lessonTitle" style="color:#4ecdc4;">Lesson Preview</h2>
+            <div id="lessonContent" class="lesson-content"></div>
+            <button class="submit-btn" onclick="closeLessonModal()">Close</button>
+        </div>
+    </div>
+
+    <!-- Auth Modal -->
+    <div id="authModal" class="modal">
+        <div class="modal-content" style="max-width:400px">
+            <span class="close" onclick="closeAuthModal()">&times;</span>
+            <h2 style="color:#4ecdc4;"><i class="fas fa-user-circle"></i> SkillBridge Account</h2>
+            <div class="auth-tabs">
+                <button class="tab-btn active" onclick="showLogin()">Login</button>
+                <button class="tab-btn" onclick="showSignup()">Sign Up</button>
+            </div>
+            <div id="loginForm">
+                <input type="text" id="loginUsername" placeholder="Username">
+                <input type="password" id="loginPassword" placeholder="Password">
+                <button onclick="login()" class="submit-btn">Login</button>
+            </div>
+            <div id="signupForm" style="display:none">
+                <input type="text" id="signupUsername" placeholder="Username">
+                <input type="password" id="signupPassword" placeholder="Password">
+                <button onclick="signup()" class="submit-btn">Create Account</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ========== FAVORITES DATA ==========
+        let favorites = JSON.parse(localStorage.getItem('skillbridge_favorites')) || [];
+
+        // Course data for lessons
+        const coursesData = {
+            1: { name: "Data Structures & Algorithms", icon: "fas fa-code-branch", level: "Advanced", description: "Master arrays, linked lists, trees, sorting, and searching algorithms." },
+            2: { name: "Python Basics", icon: "fab fa-python", level: "Beginner", description: "Learn variables, loops, functions, and data structures." },
+            3: { name: "HTML Structure", icon: "fab fa-html5", level: "Beginner", description: "Build web pages with semantic HTML and modern layout techniques." },
+            4: { name: "CSS Design", icon: "fab fa-css3-alt", level: "Beginner", description: "Style beautiful websites with colors, layouts, and animations." },
+            5: { name: "JavaScript Essentials", icon: "fab fa-js", level: "Beginner", description: "Make websites interactive with JavaScript." },
+            6: { name: "Java Fundamentals", icon: "fab fa-java", level: "Intermediate", description: "Learn object-oriented programming in Java." },
+            7: { name: "SQL Database", icon: "fas fa-database", level: "Intermediate", description: "Query and manage databases with SQL." }
+        };
+
+        const lessonContents = {
+            1: `<h3>📊 Data Structures & Algorithms</h3><div class="code-block"><pre><code>arr = [10, 20, 30]
+def binary_search(arr, target):
+    left, right = 0, len(arr)-1
+    while left <= right:
+        mid = (left+right)//2
+        if arr[mid] == target: return mid
+        elif arr[mid] < target: left = mid+1
+        else: right = mid-1
+    return -1</code></pre></div>`,
+            2: `<h3>🐍 Python Basics</h3><div class="code-block"><pre><code>print("Hello, World!")
+name = "Alice"
+age = 25
+if age >= 18:
+    print("Adult")
+for i in range(5):
+    print(i)</code></pre></div>`,
+            3: `<h3>🌐 HTML Structure</h3><div class="code-block"><pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;&lt;title&gt;Page&lt;/title&gt;&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;Hello World!&lt;/h1&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre></div>`,
+            4: `<h3>🎨 CSS Design</h3><div class="code-block"><pre><code>h1 {
+    color: #4ecdc4;
+    font-size: 32px;
+    text-align: center;
+}</code></pre></div>`,
+            5: `<h3>📜 JavaScript Essentials</h3><div class="code-block"><pre><code>let name = "John";
+function greet(name) {
+    return "Hello " + name;
+}
+console.log(greet("Alice"));</code></pre></div>`,
+            6: `<h3>☕ Java Fundamentals</h3><div class="code-block"><pre><code>public class Main {
+    public static void main(String[] args) {
+        System.out.println("Hello, World!");
+    }
+}</code></pre></div>`,
+            7: `<h3>🗄️ SQL Database</h3><div class="code-block"><pre><code>SELECT * FROM users;
+INSERT INTO users (name, email) VALUES ('John', 'john@email.com');</code></pre></div>`
+        };
+
+        // Add sample favorites if empty
+        if (favorites.length === 0) {
+            favorites = [
+                { id: 2, name: "Python Basics", icon: "fab fa-python", level: "Beginner", description: "Learn variables, loops, functions, and data structures." },
+                { id: 5, name: "JavaScript Essentials", icon: "fab fa-js", level: "Beginner", description: "Make websites interactive with JavaScript." }
+            ];
+            localStorage.setItem('skillbridge_favorites', JSON.stringify(favorites));
+        }
+
+        function saveFavorites() {
+            localStorage.setItem('skillbridge_favorites', JSON.stringify(favorites));
+            updateFavCountBadge();
+        }
+
+        function updateFavCountBadge() {
+            const badge = document.getElementById('favCountBadge');
+            if (badge) badge.textContent = favorites.length;
+        }
+
+        function showNotification(message, type = 'success') {
+            const notif = document.createElement('div');
+            notif.className = 'notification';
+            notif.innerHTML = `<i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-trash-alt'}"></i> ${message}`;
+            document.body.appendChild(notif);
+            setTimeout(() => notif.remove(), 2500);
+        }
+
+        // Render favorites in modal
+        function renderFavoritesModal() {
+            const container = document.getElementById('favoritesList');
+            if (!container) return;
+            
+            if (favorites.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-fav">
+                        <i class="fas fa-heart-broken"></i>
+                        <p>No favorites yet</p>
+                        <p style="font-size:0.8rem;">Go to Tutorials and click the ⭐ star on lessons you love!</p>
+                    </div>
+                `;
+                const batchBtn = document.getElementById('batchRemoveModalBtn');
+                if (batchBtn) batchBtn.style.display = 'none';
+                return;
+            }
+            
+            const batchBtn = document.getElementById('batchRemoveModalBtn');
+            if (batchBtn) batchBtn.style.display = 'block';
+            
+            container.innerHTML = favorites.map(fav => `
+                <div class="fav-item" data-id="${fav.id}">
+                    <div class="fav-info">
+                        <input type="checkbox" class="fav-checkbox-modal" value="${fav.id}" style="width:18px; height:18px; accent-color:#4ecdc4;">
+                        <i class="${fav.icon}"></i>
+                        <div class="fav-details">
+                            <h4>${fav.name}</h4>
+                            <p>${fav.level}</p>
+                        </div>
+                    </div>
+                    <div class="fav-actions">
+                        <button class="fav-view-btn" onclick="viewLesson(${fav.id})">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                        <button class="fav-remove-btn" onclick="removeFavorite(${fav.id})">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function openFavoritesModal() {
+            renderFavoritesModal();
+            document.getElementById('favoritesModal').style.display = 'flex';
+        }
+
+        function closeFavoritesModal() {
+            document.getElementById('favoritesModal').style.display = 'none';
+        }
+
+        function viewLesson(id) {
+            const course = coursesData[id];
+            if (course) {
+                document.getElementById('lessonTitle').innerHTML = `<i class="${course.icon}"></i> ${course.name} - Quick Preview`;
+                document.getElementById('lessonContent').innerHTML = lessonContents[id] || '<p>Full lesson available on Tutorials page!</p>';
+                document.getElementById('lessonModal').style.display = 'flex';
+            }
+        }
+
+        function closeLessonModal() {
+            document.getElementById('lessonModal').style.display = 'none';
+        }
+
+        function removeFavorite(id) {
+            const removedItem = favorites.find(f => f.id === id);
+            favorites = favorites.filter(fav => fav.id !== id);
+            saveFavorites();
+            renderFavoritesModal();
+            showNotification(`Removed "${removedItem?.name}" from favorites`, 'remove');
+            updateFavCountBadge();
+        }
+
+        function batchRemoveFromModal() {
+            const checkboxes = document.querySelectorAll('.fav-checkbox-modal:checked');
+            const selectedIds = Array.from(checkboxes).map(cb => parseInt(cb.value));
+            
+            if (selectedIds.length === 0) {
+                showNotification('Please select items to remove', 'remove');
+                return;
+            }
+            
+            if (confirm(`Remove ${selectedIds.length} item(s) from favorites?`)) {
+                favorites = favorites.filter(fav => !selectedIds.includes(fav.id));
+                saveFavorites();
+                renderFavoritesModal();
+                showNotification(`${selectedIds.length} item(s) removed!`, 'success');
+                updateFavCountBadge();
+            }
+        }
+
+        // ========== AUTH FUNCTIONS ==========
+        let users = JSON.parse(localStorage.getItem('skillbridge_users')) || [];
+        let currentUser = localStorage.getItem('skillbridge_currentUser') || null;
+
+        function updateAuthUI() {
+            const authBtn = document.getElementById('authButton');
+            if (currentUser) {
+                authBtn.innerHTML = `<i class="fas fa-user-circle"></i> ${currentUser}`;
+                authBtn.onclick = logout;
+            } else {
+                authBtn.innerHTML = `<i class="fas fa-sign-in-alt"></i> Login`;
+                authBtn.onclick = showAuthModal;
+            }
+        }
+
+        function showAuthModal() {
+            document.getElementById('authModal').style.display = 'flex';
+        }
+
+        function closeAuthModal() {
+            document.getElementById('authModal').style.display = 'none';
+        }
+
+        function showLogin() {
+            document.getElementById('loginForm').style.display = 'block';
+            document.getElementById('signupForm').style.display = 'none';
+            document.querySelectorAll('.tab-btn')[0].classList.add('active');
+            document.querySelectorAll('.tab-btn')[1].classList.remove('active');
+        }
+
+        function showSignup() {
+            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('signupForm').style.display = 'block';
+            document.querySelectorAll('.tab-btn')[1].classList.add('active');
+            document.querySelectorAll('.tab-btn')[0].classList.remove('active');
+        }
+
+        function login() {
+            const username = document.getElementById('loginUsername').value.trim();
+            const password = document.getElementById('loginPassword').value;
+            const user = users.find(u => u.username === username && u.password === password);
+            
+            if (user) {
+                currentUser = username;
+                localStorage.setItem('skillbridge_currentUser', currentUser);
+                updateAuthUI();
+                closeAuthModal();
+                showNotification(`Welcome back, ${username}! 🎉`, 'success');
+                document.getElementById('loginUsername').value = '';
+                document.getElementById('loginPassword').value = '';
+            } else {
+                alert('Invalid username or password!');
+            }
+        }
+
+        function signup() {
+            const username = document.getElementById('signupUsername').value.trim();
+            const password = document.getElementById('signupPassword').value;
+            
+            if (!username || !password) {
+                alert('Please fill in all fields');
+                return;
+            }
+            
+            if (username.length < 3) {
+                alert('Username must be at least 3 characters');
+                return;
+            }
+            
+            if (password.length < 4) {
+                alert('Password must be at least 4 characters');
+                return;
+            }
+            
+            if (users.find(u => u.username === username)) {
+                alert('Username already exists! Try another one.');
+                return;
+            }
+            
+            users.push({ username, password });
+            localStorage.setItem('skillbridge_users', JSON.stringify(users));
+            alert('✅ Account created successfully! Please login.');
+            showLogin();
+            document.getElementById('signupUsername').value = '';
+            document.getElementById('signupPassword').value = '';
+        }
+
+        function logout() {
+            currentUser = null;
+            localStorage.removeItem('skillbridge_currentUser');
+            updateAuthUI();
+            showNotification('Logged out successfully!', 'info');
+        }
+
+        function toggleMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            navLinks.classList.toggle('show');
+        }
+
+        // Close modals when clicking outside
+        window.onclick = function(event) {
+            const favModal = document.getElementById('favoritesModal');
+            const authModal = document.getElementById('authModal');
+            const lessonModal = document.getElementById('lessonModal');
+            if (event.target === favModal) closeFavoritesModal();
+            if (event.target === authModal) closeAuthModal();
+            if (event.target === lessonModal) closeLessonModal();
+        };
+
+        // Initialize
+        updateFavCountBadge();
+        updateAuthUI();
+    </script>
+</body>
+</html>

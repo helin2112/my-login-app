@@ -1,242 +1,2110 @@
-:root {
-  --bg: #f4f7fb;
-  --surface: #ffffff;
-  --primary: #1f4d8f;
-  --primary-strong: #163a6a;
-  --accent: #ed8b3d;
-  --text: #1b2230;
-  --muted: #5b677a;
-  --radius: 16px;
-}
-
-* {
-  box-sizing: border-box;
+﻿* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 body {
-  margin: 0;
-  font-family: Inter, Arial, sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  line-height: 1.65;
+    font-family: 'Segoe UI', 'Poppins', system-ui, -apple-system, sans-serif;
+    background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+    color: #f0f0f0;
+    min-height: 100vh;
 }
 
-img {
-  max-width: 100%;
+/* Navbar */
+.navbar {
+    background: rgba(15, 12, 41, 0.95);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 100;
 }
 
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.logo i {
+    margin-right: 10px;
+}
+
+.nav-links {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #ccc;
+    font-weight: 500;
+    transition: all 0.3s;
+    padding: 0.5rem 1rem;
+    border-radius: 30px;
+}
+
+.nav-links a:hover, .nav-links a.active {
+    background: rgba(78, 205, 196, 0.2);
+    color: #4ecdc4;
+    transform: translateY(-2px);
+}
+
+.search-box {
+    position: relative;
+}
+
+.search-box input {
+    padding: 0.7rem 2rem 0.7rem 1rem;
+    border: 2px solid rgba(255,255,255,0.1);
+    border-radius: 25px;
+    background: rgba(255,255,255,0.1);
+    color: white;
+    width: 250px;
+    transition: all 0.3s;
+}
+
+.search-box input:focus {
+    width: 300px;
+    border-color: #4ecdc4;
+    outline: none;
+}
+
+.search-box input::placeholder {
+    color: #aaa;
+}
+
+.search-box i {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #4ecdc4;
+}
+
+.language-select-wrapper {
+    position: relative;
+}
+
+.language-selector {
+    padding: 0.65rem 0.9rem;
+    border-radius: 25px;
+    border: 1px solid rgba(255,255,255,0.15);
+    background: rgba(255,255,255,0.08);
+    color: #f0f0f0;
+    font-weight: 600;
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+.cart-badge {
+    cursor: pointer;
+    position: relative;
+    font-size: 1.4rem;
+    background: rgba(78, 205, 196, 0.2);
+    padding: 0.5rem;
+    border-radius: 50%;
+    transition: all 0.3s;
+}
+
+.cart-badge span {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: #ff6b6b;
+    color: white;
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-size: 0.7rem;
+    font-weight: bold;
+}
+
+.menu-toggle {
+    display: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+/* Hero Section */
 .hero {
-  min-height: 80vh;
-  padding: 80px 24px;
-  background: linear-gradient(135deg, #1f4d8f 0%, #2b6db4 100%);
-  color: white;
-  display: flex;
-  align-items: center;
-}
-
-.hero-content {
-  max-width: 800px;
-}
-
-.eyebrow {
-  display: inline-block;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  font-size: 0.8rem;
-  margin-bottom: 16px;
-  color: #c2d2f0;
+    text-align: center;
+    padding: 4rem 2rem;
+    background: radial-gradient(circle at 10% 30%, rgba(78, 205, 196, 0.1), transparent);
 }
 
 .hero h1 {
-  font-size: clamp(2.6rem, 5vw, 4rem);
-  margin: 0 0 24px;
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    line-height: 1.05;
 }
 
 .hero p {
-  max-width: 680px;
-  margin-bottom: 32px;
-  color: #e4ecff;
-  font-size: 1.05rem;
+    max-width: 800px;
+    margin: 0 auto;
+    color: #dcdcdc;
+    font-size: 1.05rem;
+    line-height: 1.75;
 }
 
-.button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--accent);
-  color: white;
-  border: none;
-  padding: 14px 24px;
-  border-radius: 999px;
-  font-weight: 600;
-  text-decoration: none;
-  cursor: pointer;
-  transition: transform 0.2s ease, background 0.2s ease;
+.hero-actions {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 2rem;
 }
 
-.button:hover {
-  transform: translateY(-1px);
-  background: #cf781f;
+.highlight {
+    background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
 }
 
-.section {
-  padding: 64px 24px;
-  max-width: 1160px;
-  margin: 0 auto;
+.cta-btn {
+    margin-top: 2rem;
+    padding: 1rem 2rem;
+    background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+    border: none;
+    border-radius: 50px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
 }
 
-.gray-bg {
-  background: #eef4fb;
+.cta-btn:hover {
+    transform: scale(1.05);
 }
 
-.grid-two {
-  display: grid;
-  gap: 32px;
-  grid-template-columns: 1.35fr 1fr;
-  align-items: start;
+/* Stats */
+.stats {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    padding: 3rem;
+    flex-wrap: wrap;
 }
 
-.feature-card {
-  background: var(--surface);
-  padding: 32px;
-  border-radius: var(--radius);
-  box-shadow: 0 24px 64px rgba(31, 77, 143, 0.08);
+.container-card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
 }
 
-.feature-card h3 {
-  margin-top: 0;
+.stat {
+    text-align: center;
+    background: rgba(255,255,255,0.05);
+    padding: 1.5rem;
+    border-radius: 20px;
+    min-width: 150px;
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
 }
 
-.feature-list {
-  margin-top: 24px;
-  display: grid;
-  gap: 14px;
+.stat i {
+    font-size: 2rem;
+    color: #4ecdc4;
 }
 
-.feature-list div {
-  background: #f8fbff;
-  padding: 16px;
-  border-radius: 14px;
-  color: var(--muted);
+/* Container */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
 }
 
-.image-gallery {
-  padding-top: 0;
+.container h2 {
+    margin-bottom: 1.5rem;
 }
 
-.image-cards {
-  display: grid;
-  gap: 24px;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  margin-top: 32px;
+.featured-section {
+    margin-bottom: 2rem;
 }
 
-.image-card {
-  background: white;
-  border-radius: var(--radius);
-  overflow: hidden;
-  box-shadow: 0 20px 48px rgba(31, 77, 143, 0.08);
-  display: flex;
-  flex-direction: column;
+.featured-section h3 {
+    margin-bottom: 1rem;
+    color: #f8fafc;
+    font-size: 1.35rem;
 }
 
-.image-card img {
-  width: 100%;
-  display: block;
-  object-fit: cover;
-  aspect-ratio: 4 / 3;
+.container h2 i {
+    color: #4ecdc4;
+    margin-right: 0.5rem;
 }
 
-.image-card-text {
-  padding: 22px;
+/* Language Grid */
+.language-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
 }
 
-.image-card-text h3 {
-  margin: 0 0 10px;
+/* Toolbox */
+.toolbox-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
 }
 
-.image-card-text p {
-  margin: 0;
-  color: var(--muted);
+.toolbox-header {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    align-items: flex-start;
+    margin-bottom: 2rem;
+    padding: 2rem;
+    background: linear-gradient(135deg, rgba(78,205,196,0.14), rgba(255,255,255,0.05));
+    border-radius: 28px;
+    border: 1px solid rgba(255,255,255,0.14);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.18);
+    overflow: hidden;
 }
 
-.steps {
-  display: grid;
-  gap: 24px;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+.toolbox-header::before {
+    content: '';
+    position: absolute;
+    top: -20px;
+    right: -40px;
+    width: 160px;
+    height: 160px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 50%;
+    filter: blur(24px);
 }
 
-.step {
-  background: white;
-  border-radius: var(--radius);
-  padding: 28px;
-  border: 1px solid rgba(31, 77, 143, 0.08);
+.toolbox-header h2 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.03em;
 }
 
-.step h3 {
-  margin-top: 0;
+.toolbox-header p {
+    color: #d7d7d7;
+    max-width: 720px;
+    line-height: 1.8;
 }
 
-.contact-panel {
-  display: grid;
-  gap: 32px;
-  grid-template-columns: 1fr 1fr;
-  align-items: flex-start;
+.toolbox-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.5rem;
 }
 
-.contact-panel h2 {
-  margin-top: 0;
+.toolbox-card {
+    position: relative;
+    background: linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.06));
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+    border: 1px solid rgba(255,255,255,0.18);
+    border-radius: 28px;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    min-height: 280px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
 }
 
-form {
-  background: white;
-  border-radius: var(--radius);
-  padding: 32px;
-  box-shadow: 0 18px 48px rgba(31, 77, 143, 0.08);
+.toolbox-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 90px;
+    height: 90px;
+    background: rgba(78,205,196,0.08);
+    border-radius: 50%;
+    z-index: 0;
 }
 
-label {
-  display: block;
-  margin-bottom: 18px;
-  font-weight: 600;
-  color: var(--text);
+.toolbox-card:hover {
+    transform: translateY(-8px);
+    background: linear-gradient(180deg, rgba(255,255,255,0.18), rgba(255,255,255,0.09));
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.22);
 }
 
-input,
-textarea {
-  width: 100%;
-  border: 1px solid #d8e0ec;
-  border-radius: 14px;
-  padding: 14px 16px;
-  font: inherit;
-  margin-top: 8px;
-  background: #fdfdff;
+.tool-icon {
+    width: 72px;
+    height: 72px;
+    display: grid;
+    place-items: center;
+    border-radius: 22px;
+    background: linear-gradient(135deg, rgba(255,255,255,0.12), rgba(78,205,196,0.16));
+    color: #ffffff;
+    font-size: 1.6rem;
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.15);
+    z-index: 1;
 }
 
-textarea {
-  resize: vertical;
+.toolbox-card h3 {
+    font-size: 1.55rem;
+    margin: 0;
+    z-index: 1;
 }
 
-.form-message {
-  margin-top: 18px;
-  font-weight: 600;
-  color: var(--primary-strong);
+.toolbox-card p {
+    color: #e2e2e2;
+    line-height: 1.8;
+    flex: 1;
+    z-index: 1;
 }
 
-.footer {
-  text-align: center;
-  padding: 36px 24px 64px;
-  color: var(--muted);
+.toolbox-card-footer {
+    display: flex;
+    justify-content: flex-start;
+    z-index: 1;
 }
 
-@media (max-width: 820px) {
-  .grid-two,
-  .contact-panel {
-    grid-template-columns: 1fr;
-  }
-
-  .hero {
-    min-height: auto;
-    padding: 56px 16px;
-  }
+.toolbox-card-footer .small-btn {
+    min-width: 130px;
+    box-shadow: 0 18px 36px rgba(0, 0, 0, 0.15);
 }
+
+/* Cards */
+.language-card,
+.tutorial-card {
+    background: rgba(255,255,255,0.08);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 1.5rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+.language-card:hover,
+.tutorial-card:hover {
+    transform: translateY(-8px);
+    background: rgba(255,255,255,0.15);
+    box-shadow: 0 20px 30px -10px rgba(0,0,0,0.3);
+}
+
+.card-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.card-icon i {
+    color: #4ecdc4;
+}
+
+.language-card h3,
+.tutorial-card h3 {
+    margin-bottom: 0.5rem;
+}
+
+.description {
+    margin: 0.8rem 0;
+    font-size: 0.95rem;
+    color: #ccc;
+    line-height: 1.5;
+}
+
+.card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.duration,
+.tag {
+    font-size: 0.85rem;
+    color: #4ecdc4;
+}
+
+.favorite-btn,
+.small-btn,
+.read-more-btn {
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+    border-radius: 999px;
+}
+
+.favorite-btn {
+    background: rgba(255,255,255,0.08);
+    color: #fff;
+    padding: 0.6rem 0.85rem;
+    font-size: 1rem;
+}
+
+.small-btn {
+    background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+    color: white;
+    padding: 0.8rem 1.2rem;
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+
+.read-more-btn {
+    background: rgba(78, 205, 196, 0.2);
+    color: #4ecdc4;
+    padding: 0.8rem 1.2rem;
+    font-size: 0.9rem;
+}
+
+.favorite-btn:hover,
+.small-btn:hover,
+.read-more-btn:hover {
+    transform: scale(1.05);
+}
+
+/* Filter Section */
+.filter-section {
+    background: rgba(255,255,255,0.03);
+    border-radius: 20px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.filter-group {
+    margin-bottom: 1rem;
+}
+
+.filter-group h3 {
+    font-size: 0.9rem;
+    color: #888;
+    margin-bottom: 0.5rem;
+}
+
+.tag-filters {
+    display: flex;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+}
+
+.filter-btn, .level-btn, .tag-btn {
+    padding: 0.5rem 1.2rem;
+    border: 1px solid rgba(78, 205, 196, 0.3);
+    background: transparent;
+    color: #ccc;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.filter-btn.active, .level-btn.active, .tag-btn.active {
+    background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+    color: white;
+    border-color: transparent;
+}
+
+.filter-btn:hover, .level-btn:hover, .tag-btn:hover {
+    border-color: #4ecdc4;
+    color: #4ecdc4;
+}
+
+/* Side Cart */
+.side-cart {
+    position: fixed;
+    top: 0;
+    right: -400px;
+    width: 380px;
+    height: 100vh;
+    background: #1a1a2e;
+    border-left: 2px solid #4ecdc4;
+    z-index: 1000;
+    transition: right 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.side-cart.open {
+    right: 0;
+}
+
+.cart-header {
+    padding: 1.5rem;
+    border-bottom: 2px solid rgba(78, 205, 196, 0.2);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.close-cart {
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #999;
+}
+
+.cart-items-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1rem;
+}
+
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.8rem;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.cart-footer {
+    padding: 1.5rem;
+    border-top: 2px solid rgba(78, 205, 196, 0.2);
+}
+
+.total-lessons {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+}
+
+.complete-btn {
+    width: 100%;
+    padding: 0.8rem;
+    background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+    border: none;
+    border-radius: 50px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.complete-btn:hover {
+    transform: scale(1.02);
+}
+
+.empty-cart {
+    text-align: center;
+    padding: 2rem;
+    color: #888;
+}
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.7);
+    z-index: 2000;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: #1a1a2e;
+    padding: 2rem;
+    border-radius: 20px;
+    max-width: 500px;
+    width: 90%;
+    animation: modalSlideIn 0.3s;
+}
+
+.modal-large {
+    max-width: 800px;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+@keyframes modalSlideIn {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.close-modal, .close-modal-lesson {
+    font-size: 1.8rem;
+    cursor: pointer;
+    color: #999;
+}
+
+/* Lesson Content */
+.lesson-content {
+    padding: 0.5rem;
+}
+
+.lesson-content h3 {
+    color: #4ecdc4;
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.lesson-content h4 {
+    color: #ff6b6b;
+    margin-top: 1rem;
+}
+
+.lesson-content pre {
+    background: #0a0a1a;
+    padding: 1rem;
+    border-radius: 10px;
+    overflow-x: auto;
+    margin: 1rem 0;
+}
+
+.lesson-content code {
+    font-family: 'Courier New', monospace;
+    color: #4ecdc4;
+}
+
+/* Empty State */
+.empty-state {
+    text-align: center;
+    padding: 3rem;
+    background: rgba(255,255,255,0.05);
+    border-radius: 20px;
+    margin: 2rem 0;
+}
+
+.empty-state i {
+    color: #4ecdc4;
+    margin-bottom: 1rem;
+}
+
+/* Auth Modal */
+.auth-tabs {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(78, 205, 196, 0.2);
+}
+
+.auth-tab {
+    background: none;
+    border: none;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    color: #888;
+    font-size: 1rem;
+}
+
+.auth-tab.active {
+    color: #4ecdc4;
+    border-bottom: 2px solid #4ecdc4;
+}
+
+.auth-input {
+    width: 100%;
+    padding: 0.8rem;
+    margin: 0.5rem 0;
+    background: rgba(0,0,0,0.3);
+    border: 1px solid rgba(78, 205, 196, 0.3);
+    border-radius: 10px;
+    color: white;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .nav-links {
+        display: none;
+        width: 100%;
+        flex-direction: column;
+        text-align: center;
+        margin-top: 1rem;
+    }
+    
+    .nav-links.show {
+        display: flex;
+    }
+    
+    .menu-toggle {
+        display: block;
+    }
+    
+    .search-box input {
+        width: 180px;
+    }
+    
+    .search-box input:focus {
+        width: 200px;
+    }
+    
+    .hero h1 {
+        font-size: 1.8rem;
+    }
+    
+    .stats {
+        gap: 1rem;
+        padding: 1.5rem;
+    }
+    
+    .stat {
+        min-width: 100px;
+        padding: 1rem;
+    }
+    
+    .side-cart {
+        width: 100%;
+        right: -100%;
+    }
+    
+    .language-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Animations */
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes starPop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.3); }
+    100% { transform: scale(1); }
+}
+/* Auth Modal Styles */
+.auth-tabs {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(78, 205, 196, 0.2);
+}
+
+.auth-tab {
+    background: none;
+    border: none;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    color: #888;
+    font-size: 1rem;
+    transition: all 0.2s;
+}
+
+.auth-tab.active {
+    color: #4ecdc4;
+    border-bottom: 2px solid #4ecdc4;
+}
+
+.auth-input {
+    width: 100%;
+    padding: 0.8rem;
+    margin: 0.5rem 0;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(78, 205, 196, 0.3);
+    border-radius: 10px;
+    color: white;
+    font-size: 1rem;
+}
+
+.auth-input:focus {
+    outline: none;
+    border-color: #4ecdc4;
+}
+
+.auth-input::placeholder {
+    color: #666;
+}
+
+/* User Menu */
+.user-menu {
+    background: #1a1a2e;
+    border: 1px solid #4ecdc4;
+    border-radius: 10px;
+    padding: 0.5rem;
+    min-width: 150px;
+}
+
+.user-info {
+    padding: 0.5rem;
+    color: #4ecdc4;
+    border-bottom: 1px solid rgba(78, 205, 196, 0.3);
+    font-weight: bold;
+}
+
+.logout-btn {
+    background: #ff6b6b;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    color: white;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 0.5rem;
+    transition: all 0.2s;
+}
+
+.logout-btn:hover {
+    background: #2a19c4;
+    transform: scale(1.02);
+}
+
+/* Auth Button */
+.auth-btn {
+    background: linear-gradient(135deg, #4ecdc4, #44a08d);
+    padding: 0.5rem 1.2rem;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-weight: bold;
+    border: none;
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.auth-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 15px rgba(78, 205, 196, 0.3);
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkillBridge - Tutorials & Exams</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #0f0c29 0%, #1a1a2e 50%, #16213e 100%);
+            color: #ffffff;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            background: rgba(15, 12, 41, 0.95);
+            backdrop-filter: blur(12px);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            border-bottom: 1px solid rgba(78, 205, 196, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .logo i {
+            color: #4ecdc4;
+            margin-right: 10px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            color: #e0e0e0;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            background: rgba(78, 205, 196, 0.2);
+            color: #4ecdc4;
+        }
+
+        .search-box {
+            position: relative;
+        }
+
+        .search-box input {
+            padding: 0.7rem 2.5rem 0.7rem 1.2rem;
+            border-radius: 50px;
+            border: 1px solid rgba(78, 205, 196, 0.3);
+            background: rgba(255, 255, 255, 0.08);
+            color: white;
+            width: 220px;
+        }
+
+        .search-box input:focus {
+            width: 280px;
+            border-color: #4ecdc4;
+            outline: none;
+        }
+
+        .search-box i {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #4ecdc4;
+        }
+
+        .auth-btn {
+            background: linear-gradient(135deg, #4ecdc4, #44a08d);
+            padding: 0.5rem 1.2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            border: none;
+            color: white;
+            transition: all 0.3s;
+        }
+
+        .auth-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(78, 205, 196, 0.3);
+        }
+
+        .menu-toggle {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #4ecdc4;
+        }
+
+        .page-header {
+            text-align: center;
+            padding: 2rem;
+            background: radial-gradient(ellipse at 30% 40%, rgba(78, 205, 196, 0.08), transparent 70%);
+        }
+
+        .page-header h1 {
+            font-size: 2rem;
+        }
+
+        .page-header p {
+            color: #ccc;
+        }
+
+        .filter-bar {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .filter-chip {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .filter-chip.active, .filter-chip:hover {
+            background: #4ecdc4;
+            color: #1a1a2e;
+        }
+
+        .tutorials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+            padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .tutorial-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.3s;
+            border: 1px solid rgba(78, 205, 196, 0.15);
+            position: relative;
+        }
+
+        .tutorial-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(78, 205, 196, 0.4);
+        }
+
+        .card-image {
+            background: linear-gradient(135deg, #4ecdc4, #44a08d);
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .card-image i {
+            font-size: 4rem;
+            color: white;
+        }
+
+        .favorite-star {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            z-index: 10;
+        }
+
+        .favorite-star i {
+            font-size: 1.2rem;
+            color: #ffd700;
+            transition: all 0.2s;
+        }
+
+        .favorite-star:hover {
+            transform: scale(1.1);
+            background: rgba(0, 0, 0, 0.8);
+        }
+
+        .exam-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: #ff6b6b;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+
+        .card-content {
+            padding: 1.5rem;
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            padding-right: 30px;
+        }
+
+        .level-badge {
+            display: inline-block;
+            background: rgba(78, 205, 196, 0.2);
+            padding: 0.2rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+        }
+
+        .card-description {
+            color: #ccc;
+            font-size: 0.9rem;
+            margin: 0.8rem 0;
+            line-height: 1.4;
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .duration {
+            font-size: 0.8rem;
+            color: #4ecdc4;
+        }
+
+        .start-btn, .exam-btn {
+            border: none;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-left: 0.5rem;
+        }
+
+        .start-btn {
+            background: #4ecdc4;
+            color: #1a1a2e;
+        }
+
+        .exam-btn {
+            background: #ffa502;
+            color: #1a1a2e;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: #1a1a2e;
+            padding: 2rem;
+            border-radius: 20px;
+            max-width: 800px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            border: 1px solid rgba(78, 205, 196, 0.3);
+        }
+
+        .close {
+            float: right;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #888;
+        }
+
+        .close:hover {
+            color: #ff6b6b;
+        }
+
+        .code-block {
+            background: #0a0a1a;
+            padding: 1rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+            overflow-x: auto;
+        }
+
+        .code-block pre {
+            color: #4ecdc4;
+            margin: 0;
+            font-family: monospace;
+            white-space: pre-wrap;
+        }
+
+        .quiz-container {
+            padding: 1rem;
+        }
+
+        .question {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+
+        .question-text {
+            font-weight: bold;
+            margin-bottom: 0.8rem;
+            color: #4ecdc4;
+        }
+
+        .option {
+            display: block;
+            margin: 0.5rem 0;
+            padding: 0.5rem;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: background 0.2s;
+        }
+
+        .option:hover {
+            background: rgba(78, 205, 196, 0.2);
+        }
+
+        .option input {
+            margin-right: 0.5rem;
+            cursor: pointer;
+        }
+
+        .submit-exam-btn {
+            background: #4ecdc4;
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 1rem;
+            width: 100%;
+        }
+
+        .result-area {
+            text-align: center;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-top: 1rem;
+        }
+
+        .result-pass {
+            background: rgba(46, 204, 113, 0.2);
+            border: 1px solid #2ecc71;
+        }
+
+        .result-fail {
+            background: rgba(231, 76, 60, 0.2);
+            border: 1px solid #e74c3c;
+        }
+
+        .certificate {
+            text-align: center;
+            padding: 2rem;
+            background: linear-gradient(135deg, #f9f9f9, #e8e8e8);
+            border-radius: 15px;
+            margin-top: 1rem;
+            color: #1a1a2e;
+        }
+
+        .certificate h3 {
+            color: #e67e22;
+        }
+
+        .certificate .gold {
+            font-size: 3rem;
+            color: #f1c40f;
+        }
+
+        .score-text {
+            font-size: 2rem;
+            font-weight: bold;
+            margin: 1rem 0;
+        }
+
+        @keyframes confetti {
+            0% { transform: translateY(0); opacity: 1; }
+            100% { transform: translateY(100vh); opacity: 0; }
+        }
+
+        .auth-tabs {
+            display: flex;
+            gap: 1rem;
+            margin: 1rem 0;
+            border-bottom: 1px solid rgba(78, 205, 196, 0.2);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            color: #888;
+        }
+
+        .tab-btn.active {
+            color: #4ecdc4;
+            border-bottom: 2px solid #4ecdc4;
+        }
+
+        input {
+            width: 100%;
+            padding: 0.8rem;
+            margin: 0.5rem 0;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(78, 205, 196, 0.3);
+            border-radius: 10px;
+            color: white;
+        }
+
+        .submit-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #4ecdc4, #44a08d);
+            border: none;
+            padding: 0.8rem;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 1rem;
+            color: white;
+        }
+
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #4ecdc4;
+            color: #1a1a2e;
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            z-index: 10000;
+            animation: slideIn 0.3s ease;
+            font-weight: bold;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .floating-fav {
+            position: fixed;
+            bottom: 100px;
+            right: 25px;
+            z-index: 99;
+        }
+
+        .floating-fav-btn {
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid #ff6b6b;
+            border-radius: 50px;
+            padding: 0.7rem 1.2rem;
+            cursor: pointer;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            position: relative;
+        }
+
+        .floating-fav-btn:hover {
+            background: #ff6b6b;
+            color: #1a1a2e;
+        }
+
+        .fav-count-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #ff6b6b;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            font-size: 0.7rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                width: 100%;
+                flex-direction: column;
+                text-align: center;
+                margin-top: 1rem;
+            }
+            .nav-links.show {
+                display: flex;
+            }
+            .menu-toggle {
+                display: block;
+            }
+            .tutorials-grid {
+                grid-template-columns: 1fr;
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <i class="fas fa-bridge"></i>
+            <span>SkillBridge</span>
+        </div>
+        <div class="nav-links">
+            <a href="index.html">🏠 Home</a>
+            <a href="tutorials.html" class="active">📚 Tutorials</a>
+            <a href="playground.html">💻 Playground</a>
+            <a href="#" onclick="openFavoritesModal(); return false;">⭐ My Favorites</a>
+            <a href="community.html">💬 Community</a>
+        </div>
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Search tutorials...">
+            <i class="fas fa-search"></i>
+        </div>
+        <div id="authButton" class="auth-btn" onclick="showAuthModal()">
+            <i class="fas fa-sign-in-alt"></i> Login
+        </div>
+        <div class="menu-toggle" onclick="toggleMenu()">
+            <i class="fas fa-bars"></i>
+        </div>
+    </nav>
+
+    <div class="page-header">
+        <h1><i class="fas fa-graduation-cap"></i> Learn & Test Your Skills</h1>
+        <p>Complete lessons, take exams, and earn certificates!</p>
+    </div>
+
+    <div class="filter-bar">
+        <button class="filter-chip active" data-category="all">All</button>
+        <button class="filter-chip" data-category="frontend">🎨 Frontend</button>
+        <button class="filter-chip" data-category="backend">⚙️ Backend</button>
+        <button class="filter-chip" data-category="database">🗄️ Database</button>
+        <button class="filter-chip" data-category="dsa">📊 DSA</button>
+    </div>
+
+    <div id="tutorialsContainer" class="tutorials-grid"></div>
+
+    <div class="floating-fav">
+        <button class="floating-fav-btn" onclick="openFavoritesModal()">
+            <i class="fas fa-heart"></i> Favorites
+            <span id="favCountBadge" class="fav-count-badge">0</span>
+        </button>
+    </div>
+
+    <div id="favoritesModal" class="modal">
+        <div class="modal-content" style="max-width:500px">
+            <span class="close" onclick="closeFavoritesModal()">&times;</span>
+            <h2><i class="fas fa-heart"></i> My Favorites</h2>
+            <div id="favoritesList" style="max-height:400px; overflow-y:auto;"></div>
+        </div>
+    </div>
+
+    <div id="lessonModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeLessonModal()">&times;</span>
+            <h2 id="lessonTitle">Lesson</h2>
+            <div id="lessonContent"></div>
+            <button class="submit-btn" onclick="closeLessonModal()">Close Lesson</button>
+        </div>
+    </div>
+
+    <div id="examModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeExamModal()">&times;</span>
+            <h2 id="examTitle"><i class="fas fa-pencil-alt"></i> Course Exam</h2>
+            <div id="examContent" class="quiz-container"></div>
+        </div>
+    </div>
+
+    <div id="authModal" class="modal">
+        <div class="modal-content" style="max-width:400px">
+            <span class="close" onclick="closeAuthModal()">&times;</span>
+            <h2>SkillBridge Account</h2>
+            <div class="auth-tabs">
+                <button class="tab-btn active" onclick="showLogin()">Login</button>
+                <button class="tab-btn" onclick="showSignup()">Sign Up</button>
+            </div>
+            <div id="loginForm">
+                <input type="text" id="loginUsername" placeholder="Username">
+                <input type="password" id="loginPassword" placeholder="Password">
+                <button onclick="login()" class="submit-btn">Login</button>
+            </div>
+            <div id="signupForm" style="display:none">
+                <input type="text" id="signupUsername" placeholder="Username">
+                <input type="password" id="signupPassword" placeholder="Password">
+                <button onclick="signup()" class="submit-btn">Create Account</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ========== COMPLETE TUTORIALS WITH ALL 7 COURSES ==========
+        const tutorials = [
+            {
+                id: 1,
+                title: "Data Structures & Algorithms",
+                category: "dsa",
+                icon: "fas fa-code-branch",
+                description: "Complete DSA course: Arrays, Linked Lists, Stacks, Queues, Trees, Sorting, Searching, and Dynamic Programming.",
+                duration: "12 hours",
+                level: "Advanced",
+                fullLesson: `
+                    <h1 style="color:#4ecdc4;">📊 Data Structures & Algorithms</h1>
+                    <h2>📌 Arrays</h2>
+                    <div class="code-block"><pre><code>let arr = [10, 20, 30, 40, 50];
+arr.push(60);  // Add to end
+arr.pop();     // Remove from end
+console.log(arr[0]); // 10
+arr.forEach(num => console.log(num));</code></pre></div>
+                    <h2>📌 Linked Lists</h2>
+                    <div class="code-block"><pre><code>class Node {
+    constructor(data) {
+        this.data = data;
+        this.next = null;
+    }
+}
+class LinkedList {
+    append(data) {
+        const newNode = new Node(data);
+        if (!this.head) this.head = newNode;
+        else {
+            let current = this.head;
+            while (current.next) current = current.next;
+            current.next = newNode;
+        }
+    }
+}</code></pre></div>
+                    <h2>📌 Stacks (LIFO)</h2>
+                    <div class="code-block"><pre><code>let stack = [];
+stack.push(10); stack.push(20);
+console.log(stack.pop()); // 20</code></pre></div>
+                    <h2>📌 Queues (FIFO)</h2>
+                    <div class="code-block"><pre><code>let queue = [];
+queue.push(10); queue.push(20);
+console.log(queue.shift()); // 10</code></pre></div>
+                    <h2>📌 Binary Search (O(log n))</h2>
+                    <div class="code-block"><pre><code>function binarySearch(arr, target) {
+    let left = 0, right = arr.length-1;
+    while (left <= right) {
+        let mid = Math.floor((left+right)/2);
+        if (arr[mid] === target) return mid;
+        if (arr[mid] < target) left = mid+1;
+        else right = mid-1;
+    }
+    return -1;
+}</code></pre></div>
+                    <h2>📌 Quick Sort (O(n log n))</h2>
+                    <div class="code-block"><pre><code>function quickSort(arr) {
+    if (arr.length <= 1) return arr;
+    let pivot = arr[arr.length-1];
+    let left = [], right = [];
+    for (let i = 0; i < arr.length-1; i++) {
+        if (arr[i] < pivot) left.push(arr[i]);
+        else right.push(arr[i]);
+    }
+    return [...quickSort(left), pivot, ...quickSort(right)];
+}</code></pre></div>
+                `,
+                exam: {
+                    questions: [
+                        { text: "What is the time complexity of Binary Search?", options: ["O(1)", "O(n)", "O(log n)", "O(n²)"], correct: 2 },
+                        { text: "Which data structure uses LIFO?", options: ["Queue", "Stack", "Array", "Tree"], correct: 1 },
+                        { text: "What is Bubble Sort worst-case complexity?", options: ["O(1)", "O(n)", "O(n log n)", "O(n²)"], correct: 3 },
+                        { text: "Which data structure is FIFO?", options: ["Stack", "Queue", "Tree", "Hash Table"], correct: 1 },
+                        { text: "What does O(1) mean?", options: ["Constant time", "Linear time", "Log time", "Quadratic time"], correct: 0 }
+                    ]
+                }
+            },
+            {
+                id: 2,
+                title: "Python Basics",
+                category: "backend",
+                icon: "fab fa-python",
+                description: "Complete Python course: Variables, Data Types, Loops, Functions, OOP, File Handling.",
+                duration: "8 hours",
+                level: "Beginner",
+                fullLesson: `
+                    <h1 style="color:#4ecdc4;">🐍 Python Basics</h1>
+                    <h2>📌 Your First Program</h2>
+                    <div class="code-block"><pre><code>print("Hello, World!")</code></pre></div>
+                    <h2>📌 Variables</h2>
+                    <div class="code-block"><pre><code>name = "Alice"
+age = 25
+print(f"My name is {name} and I am {age} years old")</code></pre></div>
+                    <h2>📌 If Statements</h2>
+                    <div class="code-block"><pre><code>age = 18
+if age >= 18:
+    print("Adult")
+else:
+    print("Minor")</code></pre></div>
+                    <h2>📌 Loops</h2>
+                    <div class="code-block"><pre><code>for i in range(5):
+    print(i)
+    
+fruits = ["apple", "banana", "cherry"]
+for fruit in fruits:
+    print(fruit)</code></pre></div>
+                    <h2>📌 Functions</h2>
+                    <div class="code-block"><pre><code>def greet(name):
+    return f"Hello, {name}!"
+print(greet("Sarah"))</code></pre></div>
+                    <h2>📌 Lists</h2>
+                    <div class="code-block"><pre><code>numbers = [1, 2, 3, 4, 5]
+numbers.append(6)
+numbers.remove(3)
+for num in numbers:
+    print(num)</code></pre></div>
+                `,
+                exam: {
+                    questions: [
+                        { text: "How to print in Python?", options: ["print()", "console.log()", "echo", "printf()"], correct: 0 },
+                        { text: "Valid variable name?", options: ["2var", "my-var", "my_var", "my var"], correct: 2 },
+                        { text: "What does 'if' do?", options: ["Loop", "Decision", "Storage", "Function"], correct: 1 },
+                        { text: "Create a function?", options: ["def myFunc():", "function myFunc():", "create myFunc():", "func myFunc():"], correct: 0 },
+                        { text: "10 % 3 = ?", options: ["3", "3.33", "1", "0"], correct: 2 }
+                    ]
+                }
+            },
+            {
+                id: 3,
+                title: "HTML Structure",
+                category: "frontend",
+                icon: "fab fa-html5",
+                description: "Complete HTML course: Semantic HTML, Forms, Tables, Media Elements.",
+                duration: "5 hours",
+                level: "Beginner",
+                fullLesson: `
+                    <h1 style="color:#4ecdc4;">🌐 HTML Structure</h1>
+                    <h2>📌 Basic Template</h2>
+                    <div class="code-block"><pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;My Page&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;Hello World!&lt;/h1&gt;
+    &lt;p&gt;This is a paragraph.&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre></div>
+                    <h2>📌 Headings</h2>
+                    <div class="code-block"><pre><code>&lt;h1&gt;Main Title&lt;/h1&gt;
+&lt;h2&gt;Subheading&lt;/h2&gt;
+&lt;h3&gt;Section Title&lt;/h3&gt;
+&lt;h4&gt;Small Title&lt;/h4&gt;</code></pre></div>
+                    <h2>📌 Text Formatting</h2>
+                    <div class="code-block"><pre><code>&lt;p&gt;This is a &lt;strong&gt;bold&lt;/strong&gt; text.&lt;/p&gt;
+&lt;p&gt;This is &lt;em&gt;italic&lt;/em&gt; text.&lt;/p&gt;
+&lt;p&gt;This is &lt;mark&gt;highlighted&lt;/mark&gt; text.&lt;/p&gt;</code></pre></div>
+                    <h2>📌 Links</h2>
+                    <div class="code-block"><pre><code>&lt;a href="https://google.com" target="_blank"&gt;Visit Google&lt;/a&gt;</code></pre></div>
+                    <h2>📌 Images</h2>
+                    <div class="code-block"><pre><code>&lt;img src="image.jpg" alt="Description" width="300"&gt;</code></pre></div>
+                    <h2>📌 Lists</h2>
+                    <div class="code-block"><pre><code>&lt;ul&gt;
+    &lt;li&gt;Item 1&lt;/li&gt;
+    &lt;li&gt;Item 2&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol&gt;
+    &lt;li&gt;First&lt;/li&gt;
+    &lt;li&gt;Second&lt;/li&gt;
+&lt;/ol&gt;</code></pre></div>
+                    <h2>📌 Tables</h2>
+                    <div class="code-block"><pre><code>&lt;table border="1"&gt;
+    &lt;tr&gt;&lt;th&gt;Name&lt;/th&gt;&lt;th&gt;Age&lt;/th&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;John&lt;/td&gt;&lt;td&gt;25&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;</code></pre></div>
+                    <h2>📌 Forms</h2>
+                    <div class="code-block"><pre><code>&lt;form&gt;
+    &lt;input type="text" placeholder="Name"&gt;
+    &lt;input type="email" placeholder="Email"&gt;
+    &lt;textarea rows="4"&gt;&lt;/textarea&gt;
+    &lt;button type="submit"&gt;Submit&lt;/button&gt;
+&lt;/form&gt;</code></pre></div>
+                `,
+                exam: {
+                    questions: [
+                        { text: "What does HTML stand for?", options: ["Hyper Text Markup Language", "High Tech Modern Language", "Hyper Transfer Markup Language", "Home Tool Markup Language"], correct: 0 },
+                        { text: "Tag for main heading?", options: ["<h1>", "<heading>", "<head>", "<header>"], correct: 0 },
+                        { text: "How to create a link?", options: ["<a href='url'>", "<link>", "<href>", "<url>"], correct: 0 },
+                        { text: "Tag for image?", options: ["<img>", "<image>", "<pic>", "<src>"], correct: 0 },
+                        { text: "What does <p> do?", options: ["Paragraph", "Link", "Image", "Heading"], correct: 0 }
+                    ]
+                }
+            },
+            {
+                id: 4,
+                title: "CSS Design",
+                category: "frontend",
+                icon: "fab fa-css3-alt",
+                description: "Complete CSS course: Selectors, Box Model, Flexbox, Grid, Animations.",
+                duration: "6 hours",
+                level: "Beginner",
+                fullLesson: `
+                    <h1 style="color:#4ecdc4;">🎨 CSS Design</h1>
+                    <h2>📌 CSS Syntax</h2>
+                    <div class="code-block"><pre><code>selector {
+    property: value;
+}
+h1 {
+    color: blue;
+    font-size: 32px;
+}</code></pre></div>
+                    <h2>📌 Selectors</h2>
+                    <div class="code-block"><pre><code>/* Element selector */
+p { color: red; }
+/* Class selector */
+.my-class { background: yellow; }
+/* ID selector */
+#my-id { border: 1px solid black; }</code></pre></div>
+                    <h2>📌 Colors</h2>
+                    <div class="code-block"><pre><code>/* Named colors */
+color: red;
+/* Hex */
+color: #ff6b6b;
+/* RGB */
+color: rgb(255, 0, 0);
+/* HSL */
+color: hsl(0, 100%, 50%);</code></pre></div>
+                    <h2>📌 Box Model</h2>
+                    <div class="code-block"><pre><code>.box {
+    width: 300px;
+    padding: 20px;
+    margin: 10px;
+    border: 2px solid black;
+    border-radius: 10px;
+}</code></pre></div>
+                    <h2>📌 Flexbox</h2>
+                    <div class="code-block"><pre><code>.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}</code></pre></div>
+                    <h2>📌 Grid</h2>
+                    <div class="code-block"><pre><code>.grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}</code></pre></div>
+                    <h2>📌 Animations</h2>
+                    <div class="code-block"><pre><code>@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+.element {
+    animation: fadeIn 2s ease;
+}</code></pre></div>
+                `,
+                exam: {
+                    questions: [
+                        { text: "What does CSS stand for?", options: ["Cascading Style Sheets", "Creative Style Sheets", "Computer Style Sheets", "Colorful Style Sheets"], correct: 0 },
+                        { text: "Select class 'box'?", options: [".box", "#box", "box", "*box"], correct: 0 },
+                        { text: "Property for text color?", options: ["color", "text-color", "font-color", "bgcolor"], correct: 0 },
+                        { text: "What does 'display: flex' do?", options: ["Flexible layout", "Hide element", "Bold text", "Add border"], correct: 0 },
+                        { text: "Responsive unit?", options: ["px", "pt", "%", "in"], correct: 2 }
+                    ]
+                }
+            },
+            {
+                id: 5,
+                title: "JavaScript Essentials",
+                category: "frontend",
+                icon: "fab fa-js",
+                description: "Complete JavaScript course: Variables, Functions, DOM, Events, Async/Await.",
+                duration: "7 hours",
+                level: "Beginner",
+                fullLesson: `
+                    <h1 style="color:#4ecdc4;">📜 JavaScript Essentials</h1>
+                    <h2>📌 Variables</h2>
+                    <div class="code-block"><pre><code>let name = "John";
+const age = 25;
+var city = "New York";
+console.log(name);</code></pre></div>
+                    <h2>📌 Data Types</h2>
+                    <div class="code-block"><pre><code>let string = "Hello";
+let number = 42;
+let boolean = true;
+let array = [1, 2, 3];
+let object = { name: "John", age: 25 };</code></pre></div>
+                    <h2>📌 Functions</h2>
+                    <div class="code-block"><pre><code>// Regular function
+function greet(name) {
+    return "Hello " + name;
+}
+// Arrow function
+const add = (a, b) => a + b;</code></pre></div>
+                    <h2>📌 DOM Manipulation</h2>
+                    <div class="code-block"><pre><code>// Select elements
+let element = document.getElementById("myId");
+let elements = document.querySelectorAll(".myClass");
+// Change content
+element.innerHTML = "New content";
+// Add event listener
+button.addEventListener("click", () => {
+    alert("Clicked!");
+});</code></pre></div>
+                    <h2>📌 Arrays</h2>
+                    <div class="code-block"><pre><code>let arr = [1, 2, 3];
+arr.push(4);      // Add to end
+arr.pop();        // Remove from end
+arr.forEach(x => console.log(x));
+let doubled = arr.map(x => x * 2);</code></pre></div>
+                    <h2>📌 Objects</h2>
+                    <div class="code-block"><pre><code>let person = {
+    name: "Alice",
+    age: 30,
+    greet() {
+        return `Hello, I'm ${this.name}`;
+    }
+};
+console.log(person.name);</code></pre></div>
+                    <h2>📌 Promises & Async/Await</h2>
+                    <div class="code-block"><pre><code>async function fetchData() {
+    try {
+        let response = await fetch('https://api.example.com/data');
+        let data = await response.json();
+        console.log(data);
+    } catch(error) {
+        console.error(error);
+    }
+}</code></pre></div>
+                `,
+                exam: {
+                    questions: [
+                        { text: "How to write an alert?", options: ["alert('Hello')", "msg('Hello')", "console.log('Hello')", "prompt('Hello')"], correct: 0 },
+                        { text: "Declare a variable?", options: ["var myVar", "v myVar", "variable myVar", "declare myVar"], correct: 0 },
+                        { text: "What does '===' do?", options: ["Compares value and type", "Assigns value", "Compares only value", "Not equal"], correct: 0 },
+                        { text: "Not a JavaScript data type?", options: ["String", "Boolean", "Float", "Number"], correct: 2 },
+                        { text: "Create a function?", options: ["function myFunc()", "def myFunc()", "create myFunc()", "func myFunc()"], correct: 0 }
+                    ]
+                }
+            },
+            {
+                id: 6,
+                title: "Java Fundamentals",
+                category: "backend",
+                icon: "fab fa-java",
+                description: "Complete Java course: OOP, Classes, Inheritance, Collections, Exception Handling.",
+                duration: "10 hours",
+                level: "Intermediate",
+                fullLesson: `
+                    <h1 style="color:#4ecdc4;">☕ Java Fundamentals</h1>
+                    <h2>📌 First Program</h2>
+                    <div class="code-block"><pre><code>public class Main {
+    public static void main(String[] args) {
+        System.out.println("Hello, World!");
+    }
+}</code></pre></div>
+                    <h2>📌 Variables</h2>
+                    <div class="code-block"><pre><code>String name = "Alice";
+int age = 25;
+double price = 19.99;
+boolean isStudent = true;
+char grade = 'A';</code></pre></div>
+                    <h2>📌 If Statements</h2>
+                    <div class="code-block"><pre><code>if (age >= 18) {
+    System.out.println("Adult");
+} else {
+    System.out.println("Minor");
+}</code></pre></div>
+                    <h2>📌 Loops</h2>
+                    <div class="code-block"><pre><code>// For loop
+for (int i = 0; i < 5; i++) {
+    System.out.println(i);
+}
+// While loop
+int count = 0;
+while (count < 3) {
+    System.out.println("Hello");
+    count++;
+}</code></pre></div>
+                    <h2>📌 Classes & Objects</h2>
+                    <div class="code-block"><pre><code>public class Student {
+    String name;
+    int age;
+    
+    public Student(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+    
+    public void introduce() {
+        System.out.println("Hi, I'm " + name);
+    }
+}
+// Usage
+Student s1 = new Student("Alice", 20);
+s1.introduce();</code></pre></div>
+                    <h2>📌 Inheritance</h2>
+                    <div class="code-block"><pre><code>public class Animal {
+    public void sound() {
+        System.out.println("Animal makes sound");
+    }
+}
+public class Dog extends Animal {
+    @Override
+    public void sound() {
+        System.out.println("Dog barks");
+    }
+}</code></pre></div>
+                `,
+                exam: {
+                    questions: [
+                        { text: "Entry point of Java program?", options: ["main()", "start()", "run()", "init()"], correct: 0 },
+                        { text: "Keyword to create a class?", options: ["class", "struct", "object", "type"], correct: 0 },
+                        { text: "Print to console?", options: ["System.out.println()", "console.log()", "print()", "echo()"], correct: 0 },
+                        { text: "What is OOP?", options: ["Object Oriented Programming", "Online Operating Protocol", "Output Optimization", "Object Output Program"], correct: 0 },
+                        { text: "Keyword for inheritance?", options: ["extends", "inherits", "implements", "super"], correct: 0 }
+                    ]
+                }
+            },
+            {
+                id: 7,
+                title: "SQL Database",
+                category: "database",
+                icon: "fas fa-database",
+                description: "Complete SQL course: SELECT, INSERT, UPDATE, DELETE, JOINs, Subqueries.",
+                duration: "5 hours",
+                level: "Intermediate",
+                fullLesson: `
+                    <h1 style="color:#4ecdc4;">🗄️ SQL Database</h1>
+                    <h2>📌 SELECT Statement</h2>
+                    <div class="code-block"><pre><code>SELECT * FROM users;
+SELECT name, email FROM users;
+SELECT DISTINCT city FROM users;</code></pre></div>
+                    <h2>📌 WHERE Clause</h2>
+                    <div class="code-block"><pre><code>SELECT * FROM users WHERE age > 18;
+SELECT * FROM users WHERE name = 'John';
+SELECT * FROM users WHERE age BETWEEN 18 AND 30;</code></pre></div>
+                    <h2>📌 INSERT Statement</h2>
+                    <div class="code-block"><pre><code>INSERT INTO users (name, email, age) 
+VALUES ('John', 'john@email.com', 25);</code></pre></div>
+                    <h2>📌 UPDATE Statement</h2>
+                    <div class="code-block"><pre><code>UPDATE users SET age = 26 WHERE name = 'John';
+UPDATE users SET city = 'New York' WHERE age > 18;</code></pre></div>
+                    <h2>📌 DELETE Statement</h2>
+                    <div class="code-block"><pre><code>DELETE FROM users WHERE id = 5;
+DELETE FROM users WHERE age < 18;</code></pre></div>
+                    <h2>📌 ORDER BY</h2>
+                    <div class="code-block"><pre><code>SELECT * FROM users ORDER BY name ASC;
+SELECT * FROM products ORDER BY price DESC;</code></pre></div>
+                    <h2>📌 GROUP BY</h2>
+                    <div class="code-block"><pre><code>SELECT city, COUNT(*) FROM users GROUP BY city;
+SELECT age, AVG(score) FROM scores GROUP BY age;</code></pre></div>
+                    <h2>📌 JOINs</h2>
+                    <div class="code-block"><pre><code>SELECT users.name, orders.total 
+FROM users 
+INNER JOIN orders ON users.id = orders.user_id;
+
+SELECT users.name, orders.total 
+FROM users 
+LEFT JOIN orders ON users.id = orders.user_id;</code></pre></div>
+                `,
+                exam: {
+                    questions: [
+                        { text: "What does SQL stand for?", options: ["Structured Query Language", "Simple Query Language", "Standard Query Language", "System Query Language"], correct: 0 },
+                        { text: "Command to retrieve data?", options: ["SELECT", "GET", "FETCH", "RETRIEVE"], correct: 0 },
+                        { text: "How to filter results?", options: ["WHERE", "FILTER", "HAVING", "CONDITION"], correct: 0 },
+                        { text: "Command to add data?", options: ["INSERT", "ADD", "CREATE", "UPDATE"], correct: 0 },
+                        { text: "What does 'SELECT * FROM users' do?", options: ["Selects all columns", "Selects first column", "Deletes table", "Creates table"], correct: 0 }
+                    ]
+                }
+            }
+        ];
+
+        let favorites = JSON.parse(localStorage.getItem('skillbridge_favorites')) || [];
+        let examResults = JSON.parse(localStorage.getItem('skillbridge_examResults')) || {};
+        let currentCategory = 'all';
+        let searchTerm = '';
+
+        function isFavorite(id) { return favorites.some(fav => fav.id === id); }
+        function saveFavorites() { localStorage.setItem('skillbridge_favorites', JSON.stringify(favorites)); updateFavCount(); }
+        function updateFavCount() { let badge = document.getElementById('favCountBadge'); if (badge) badge.textContent = favorites.length; }
+
+        function addToFavorites(id, tutorial) {
+            if (isFavorite(id)) { favorites = favorites.filter(fav => fav.id !== id); showNotification(`❌ Removed "${tutorial.title}"`, 'info'); }
+            else { favorites.push({ id, name: tutorial.title, icon: tutorial.icon, level: tutorial.level, description: tutorial.description }); showNotification(`⭐ Added "${tutorial.title}"!`, 'success'); }
+            saveFavorites(); renderTutorials();
+        }
+
+        function openFavoritesModal() {
+            let container = document.getElementById('favoritesList');
+            if (favorites.length === 0) container.innerHTML = '<div style="text-align:center; padding:2rem;"><i class="fas fa-heart-broken" style="font-size:3rem;"></i><p>No favorites yet</p><p>Click the ⭐ star on any tutorial!</p></div>';
+            else container.innerHTML = favorites.map(fav => `<div style="display:flex; align-items:center; justify-content:space-between; padding:0.8rem; border-bottom:1px solid rgba(255,255,255,0.1);"><div style="display:flex; align-items:center; gap:12px;"><i class="${fav.icon}" style="font-size:1.5rem; color:#4ecdc4;"></i><div><strong>${fav.name}</strong><p style="font-size:0.7rem; color:#888;">${fav.level}</p></div></div><button onclick="viewLesson(${fav.id})" style="background:none; border:none; color:#4ecdc4; cursor:pointer;"><i class="fas fa-eye"></i></button></div>`).join('');
+            document.getElementById('favoritesModal').style.display = 'flex';
+        }
+
+        function closeFavoritesModal() { document.getElementById('favoritesModal').style.display = 'none'; }
+        function viewLesson(id) { let tutorial = tutorials.find(t => t.id === id); if (tutorial) { document.getElementById('lessonTitle').innerHTML = tutorial.title; document.getElementById('lessonContent').innerHTML = tutorial.fullLesson; document.getElementById('lessonModal').style.display = 'flex'; closeFavoritesModal(); } }
+
+        function renderTutorials() {
+            let container = document.getElementById('tutorialsContainer');
+            if (!container) return;
+            let filtered = tutorials;
+            if (currentCategory !== 'all') filtered = tutorials.filter(t => t.category === currentCategory);
+            if (searchTerm) filtered = filtered.filter(t => t.title.toLowerCase().includes(searchTerm.toLowerCase()) || t.description.toLowerCase().includes(searchTerm.toLowerCase()));
+            if (filtered.length === 0) { container.innerHTML = '<div style="text-align:center; padding:3rem; color:#888;">No tutorials found</div>'; return; }
+            container.innerHTML = filtered.map(tutorial => { let hasPassed = examResults[tutorial.id] && examResults[tutorial.id].passed;
+                return `<div class="tutorial-card"><div class="card-image"><i class="${tutorial.icon}"></i>${hasPassed ? '<span class="exam-badge" style="background:#2ecc71;">✓ Certified</span>' : '<span class="exam-badge">📝 Exam Available</span>'}<div class="favorite-star" onclick="event.stopPropagation(); addToFavorites(${tutorial.id}, ${JSON.stringify(tutorial).replace(/"/g, '&quot;')})"><i class="${isFavorite(tutorial.id) ? 'fas fa-star' : 'far fa-star'}" style="color: #ffd700;"></i></div></div><div class="card-content"><h3 class="card-title">${tutorial.title}</h3><span class="level-badge">${tutorial.level}</span><p class="card-description">${tutorial.description}</p><div class="card-footer"><span class="duration"><i class="far fa-clock"></i> ${tutorial.duration}</span><div><button class="start-btn" onclick="openLesson(${tutorial.id})">📖 Learn</button><button class="exam-btn" onclick="openExam(${tutorial.id})">📝 Exam</button></div></div></div></div>`;
+            }).join('');
+        }
+
+        function openLesson(id) { let t = tutorials.find(t => t.id === id); if (t) { document.getElementById('lessonTitle').innerHTML = t.title; document.getElementById('lessonContent').innerHTML = t.fullLesson; document.getElementById('lessonModal').style.display = 'flex'; } }
+        function closeLessonModal() { document.getElementById('lessonModal').style.display = 'none'; }
+
+        let currentExamId = null, userAnswers = {};
+        function openExam(id) {
+            let tutorial = tutorials.find(t => t.id === id);
+            if (!tutorial || !tutorial.exam) return;
+            currentExamId = id; userAnswers = {};
+            let exam = tutorial.exam;
+            let html = `<div class="quiz-container"><p><strong>Course:</strong> ${tutorial.title}</p><p><strong>Questions:</strong> ${exam.questions.length}</p><p><strong>Passing Score:</strong> 60% (${Math.ceil(exam.questions.length * 0.6)}/${exam.questions.length} correct)</p><hr>`;
+            exam.questions.forEach((q, idx) => { html += `<div class="question"><div class="question-text">${idx+1}. ${q.text}</div>${q.options.map((opt, optIdx) => `<label class="option"><input type="radio" name="q${idx}" value="${optIdx}" onchange="saveAnswer(${idx}, ${optIdx})"> ${opt}</label>`).join('')}</div>`; });
+            html += `<button class="submit-exam-btn" onclick="submitExam()">Submit Exam & Get Score</button><div id="examResult"></div></div>`;
+            document.getElementById('examTitle').innerHTML = `<i class="fas fa-pencil-alt"></i> ${tutorial.title} Exam`;
+            document.getElementById('examContent').innerHTML = html;
+            document.getElementById('examModal').style.display = 'flex';
+        }
+        function saveAnswer(q, a) { userAnswers[q] = a; }
+        function submitExam() {
+            let tutorial = tutorials.find(t => t.id === currentExamId);
+            if (!tutorial || !tutorial.exam) return;
+            let exam = tutorial.exam, score = 0;
+            exam.questions.forEach((q, idx) => { if (userAnswers[idx] === q.correct) score++; });
+            let percentage = (score / exam.questions.length) * 100, passed = percentage >= 60;
+            examResults[currentExamId] = { score, total: exam.questions.length, percentage, passed, date: new Date().toLocaleString() };
+            localStorage.setItem('skillbridge_examResults', JSON.stringify(examResults));
+            let resultDiv = document.getElementById('examResult');
+            if (passed) {
+                resultDiv.innerHTML = `<div class="result-area result-pass"><i class="fas fa-trophy" style="font-size:3rem; color:#f1c40f;"></i><div class="score-text">${score}/${exam.questions.length} (${percentage}%)</div><h3>🎉 CONGRATULATIONS! YOU PASSED! 🎉</h3><div class="certificate"><i class="fas fa-certificate gold"></i><h3>Certificate of Completion</h3><p>This certifies completion of</p><h2>${tutorial.title}</h2><p>with score ${score}/${exam.questions.length} (${percentage}%)</p><p><small>Date: ${new Date().toLocaleString()}</small></p></div><button class="submit-exam-btn" onclick="closeExamModal(); renderTutorials();">Close</button></div>`;
+                createConfetti();
+            } else {
+                resultDiv.innerHTML = `<div class="result-area result-fail"><i class="fas fa-frown" style="font-size:3rem;"></i><div class="score-text">${score}/${exam.questions.length} (${percentage}%)</div><h3>😔 Sorry, You Did Not Pass</h3><p>You need ${Math.ceil(exam.questions.length*0.6)} correct to pass.</p><button class="submit-exam-btn" onclick="closeExamModal()">Close</button></div>`;
+            }
+            renderTutorials();
+        }
+        function createConfetti() { for(let i=0;i<100;i++) { let c = document.createElement('div'); c.innerHTML = ['🎉','🎊','⭐','🏆','📜'][Math.floor(Math.random()*5)]; c.style.cssText = `position:fixed; left:${Math.random()*100}%; top:-20px; font-size:${Math.random()*20+10}px; pointer-events:none; z-index:9999; animation:confetti ${Math.random()*2+2}s linear forwards`; document.body.appendChild(c); setTimeout(()=>c.remove(),3000); } }
+        function closeExamModal() { document.getElementById('examModal').style.display = 'none'; }
+        function showNotification(msg, type) { let n = document.createElement('div'); n.className='notification'; n.innerHTML=msg; n.style.background=type==='success'?'#4ecdc4':'#ffa502'; document.body.appendChild(n); setTimeout(()=>n.remove(),2000); }
+
+        function setupFilters() {
+            document.querySelectorAll('.filter-chip').forEach(chip => { chip.addEventListener('click', function() { document.querySelectorAll('.filter-chip').forEach(c=>c.classList.remove('active')); this.classList.add('active'); currentCategory = this.dataset.category; renderTutorials(); }); });
+            document.getElementById('searchInput')?.addEventListener('input', (e) => { searchTerm = e.target.value; renderTutorials(); });
+        }
+
+        let users = JSON.parse(localStorage.getItem('skillbridge_users')) || [];
+        let currentUser = localStorage.getItem('skillbridge_currentUser') || null;
+
+        function updateAuthUI() { let btn = document.getElementById('authButton'); if (currentUser) { btn.innerHTML = `<i class="fas fa-user"></i> ${currentUser}`; btn.onclick = logout; } else { btn.innerHTML = `<i class="fas fa-sign-in-alt"></i> Login`; btn.onclick = showAuthModal; } }
+        function showAuthModal() { document.getElementById('authModal').style.display = 'flex'; }
+        function closeAuthModal() { document.getElementById('authModal').style.display = 'none'; }
+        function showLogin() { document.getElementById('loginForm').style.display = 'block'; document.getElementById('signupForm').style.display = 'none'; }
+        function showSignup() { document.getElementById('loginForm').style.display = 'none'; document.getElementById('signupForm').style.display = 'block'; }
+        function login() { let u = document.getElementById('loginUsername').value.trim(), p = document.getElementById('loginPassword').value; let user = users.find(u2=>u2.username===u && u2.password===p); if(user) { currentUser=u; localStorage.setItem('skillbridge_currentUser',currentUser); updateAuthUI(); closeAuthModal(); showNotification(`Welcome back, ${u}! 🎉`,'success'); } else alert('Invalid credentials!'); }
+        function signup() { let u = document.getElementById('signupUsername').value.trim(), p = document.getElementById('signupPassword').value; if(!u||!p) { alert('Fill all fields'); return; } if(u.length<3) { alert('Username min 3 chars'); return; } if(p.length<4) { alert('Password min 4 chars'); return; } if(users.find(u2=>u2.username===u)) { alert('Username exists!'); return; } users.push({username:u, password:p}); localStorage.setItem('skillbridge_users',JSON.stringify(users)); alert('Account created! Please login.'); showLogin(); }
+        function logout() { currentUser=null; localStorage.removeItem('skillbridge_currentUser'); updateAuthUI(); showNotification('Logged out!','info'); }
+        function toggleMenu() { document.querySelector('.nav-links').classList.toggle('show'); }
+
+        window.onclick = function(e) { if(e.target===document.getElementById('favoritesModal')) closeFavoritesModal(); if(e.target===document.getElementById('authModal')) closeAuthModal(); if(e.target===document.getElementById('lessonModal')) closeLessonModal(); if(e.target===document.getElementById('examModal')) closeExamModal(); };
+
+        renderTutorials(); setupFilters(); updateAuthUI(); updateFavCount();
+    </script>
+</body>
+</html>
